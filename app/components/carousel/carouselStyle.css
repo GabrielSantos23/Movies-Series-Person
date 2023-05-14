@@ -1,0 +1,46 @@
+.swiper-button-prev {
+  height: 90%;
+  top: 0;
+  left: 0;
+  background-color: #00000090;
+  border: none;
+  color: white;
+  font-size: 10px;
+  width: 30px;
+}
+.swiper-button-next {
+  height: 90%;
+  top: 0;
+  right: 0;
+  background-color: #00000090;
+  border: none;
+  color: white;
+  font-size: 10px;
+  width: 30px;
+}
+
+.imageComponent {
+  outline: none;
+  width: 100%;
+  background-color: #202124;
+  border-style: none;
+
+  [src=''] {
+    visibility: hidden;
+  }
+
+  [src] {
+    visibility: visible;
+    opacity: 0;
+    animation: fadeIn 500ms ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

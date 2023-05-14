@@ -2,26 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  height: 100%;
+  background-color: #141414;
+  color: #e5e7eb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
+.div-40 {
+  height: 70vh;
+  width: 40%;
+  background: rgb(0, 0, 0);
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 212, 255, 0) 100%
+  );
+}
+.headerMobileBG {
+  background: linear-gradient(
+    to top,
+    #000000 0%,
+    rgba(0, 0, 0, 0.89) 16.28%,
+    rgba(0, 0, 0, 0.599609) 30.66%,
+    rgba(0, 0, 0, 0.1) 46.09%,
+    rgba(0, 0, 0, 0.0440308) 49.58%,
+    rgba(255, 255, 255, 0) 76.42%
+  );
+  z-index: 1;
 }
