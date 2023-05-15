@@ -37,7 +37,7 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
   //   };
   return (
     <div
-      className='h-[70vh] bg-black w-full'
+      className='h-[70vh] lg:hidden bg-black w-full'
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`,
         backgroundSize: 'cover',

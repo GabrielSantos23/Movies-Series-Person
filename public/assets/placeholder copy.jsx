@@ -8,7 +8,7 @@ const Placeholder = (props) => (
     xmlnsXlink='http://www.w3.org/1999/xlink'
     {...props}
   >
-    <rect fill='#000' />
+    <rect fill='#202124' />
     <rect
       x={126}
       y={364}

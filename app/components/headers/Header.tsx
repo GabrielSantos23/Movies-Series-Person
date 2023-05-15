@@ -114,54 +114,65 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
     <>
       {matches ? (
         <div className='w-full h-[70vh]  bg-black flex'>
-          <div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
-            <Link
-              href={movie.name ? `/series/${movie.id}` : `/movies/${movie.id}`}
+          <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: 'linear', duration: 0.5 }}
             >
-              <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
-                {movie?.title || movie?.name}
-              </h1>
-            </Link>
-            <div className='flex gap-2 mt-5'>
-              <Rating
-                precision={0.5}
-                readOnly
-                size='small'
-                sx={{
-                  fontSize: '20px',
-                  color: '#1d9bf0',
-                  height: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                emptyIcon={
-                  <StarBorderIcon
-                    fontSize='inherit'
-                    style={{
-                      color: '#1d9bf0',
-                    }}
-                  />
+              <Link
+                href={
+                  movie.name ? `/series/${movie.id}` : `/movies/${movie.id}`
                 }
-                value={movie?.vote_average / 2}
-              />
-              <p className='text-neutral-500'>{numReviews} Reviews</p>
-              {movie?.release_date && !movie?.media_type && (
-                <p className='text-neutral-500'>
-                  {new Date(movie.release_date).getFullYear()}
-                </p>
-              )}
+              >
+                <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
+                  {movie?.title || movie?.name}
+                </h1>
+              </Link>
+              <div className='flex gap-2 mt-5'>
+                <Rating
+                  precision={0.5}
+                  readOnly
+                  size='small'
+                  sx={{
+                    fontSize: '20px',
+                    color: '#1d9bf0',
+                    height: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  emptyIcon={
+                    <StarBorderIcon
+                      fontSize='inherit'
+                      style={{
+                        color: '#1d9bf0',
+                      }}
+                    />
+                  }
+                  value={movie?.vote_average / 2}
+                />
+                <p className='text-neutral-500'>{numReviews} Reviews</p>
+                {movie?.release_date && !movie?.media_type && (
+                  <p className='text-neutral-500'>
+                    {new Date(movie.release_date).getFullYear()}
+                  </p>
+                )}
 
-              {movie?.media_type === 'tv' && numSeasons && (
-                <p className='text-neutral-500'>{numSeasons} seasons</p>
-              )}
-              {usRating && <p className='text-neutral-500'>{usRating} </p>}
-            </div>
-            <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
-              {movie?.overview}
-            </div>
-          </div>
+                {movie?.media_type === 'tv' && numSeasons && (
+                  <p className='text-neutral-500'>{numSeasons} seasons</p>
+                )}
+                {usRating && <p className='text-neutral-500'>{usRating} </p>}
+              </div>
+              <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
+                {movie?.overview}
+              </div>
+            </motion.div>
+          </motion.div>
           <div className='w-[70%] absolute right-0 flex items-end flex-end h-[70vh]'>
-            <img
+            <motion.img
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, type: 'linear' }}
               src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
               alt={movie?.name || movie?.title}
               className='h-full w-full right-0 opacity-70 object-cover '

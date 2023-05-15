@@ -1,0 +1,4 @@
+.react-tabs__tab--selected {
+    color: white;
+    border-bottom: 2px solid white;
+  }

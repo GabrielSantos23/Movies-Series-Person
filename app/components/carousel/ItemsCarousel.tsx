@@ -9,12 +9,15 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { Rating } from '@mui/material';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './carouselStyle.css';
+import Placeholder from './../../../public/assets/placeholder';
 
 interface ItemsCarouselProps {
   explore?: boolean;
   urltype: string;
   title?: string;
   type: string;
+  url?: string;
+  serie?: boolean;
 }
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -23,6 +26,8 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
   title,
   type,
   explore,
+  url,
+  serie,
 }) => {
   const [items, setItems] = useState<any[]>([]);
   const [showContent, setShowContent] = useState<boolean>(false);
@@ -38,14 +43,20 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
           },
         }
       );
-      setItems(response?.data?.results);
+      {
+        response?.data?.results
+          ? setItems(response?.data?.results)
+          : setItems(response?.data?.cast);
+      }
     };
 
     fetchData();
   }, []);
 
   return (
-    <div className=' py-10 pl-10   '>
+    <div
+      className={`py-10 ${type !== 'person' && type !== 'similar' && 'pl-10'}`}
+    >
       <div className='flex items-center gap-2 pb-5 '>
         <p className='text-xl   '>{title}</p>
 
@@ -56,7 +67,13 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
               query: { title: title, urltype: urltype },
             }}
           >
-            <div className='text-sky-500 hover:text-sky-600 transition  text-sm'>
+            <div
+              className={`${
+                type === 'similar'
+                  ? 'text-transparent'
+                  : 'text-sky-500 hover:text-sky-600'
+              }   transition  text-sm`}
+            >
               Explore all
             </div>
           </Link>
@@ -64,30 +81,26 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
       </div>
       <div>
         <Carousel>
-          {items.map((item) => (
-            <div key={item.id}>
-              <Link
-                href={
-                  type === 'movie' || 'serie'
-                    ? `${
-                        type === 'movie'
-                          ? `movie/${item.id}`
-                          : `serie/${item.id}`
-                      }`
-                    : `person/${item.id}`
-                }
-              >
-                <LazyLoadImage
-                  src={
-                    item.poster_path
-                      ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-                      : '/assets/placeholder.jsx'
-                  }
-                  alt={item.name || item.title}
-                  className='imageComponent min-w-[240px] min-h-[350px] bg-[#202124]'
-                  threshold={0}
-                  effect='opacity'
-                />
+          {items?.map((item) => (
+            <div key={item.id} className=' '>
+              <Link href={`/${url ? url : type}/${item.id}`}>
+                {item.profile_path || item.poster_path ? (
+                  <LazyLoadImage
+                    src={
+                      type === 'person'
+                        ? `https://image.tmdb.org/t/p/original${item.profile_path}`
+                        : item.poster_path
+                        ? `https://image.tmdb.org/t/p/original${item.poster_path}`
+                        : '/assets/placeholder.jsx'
+                    }
+                    alt={item.name || item.title}
+                    className='imageComponent min-w-[240px] min-h-[350px] bg-[#202124]'
+                    threshold={0}
+                    effect='opacity'
+                  />
+                ) : (
+                  <Placeholder />
+                )}
               </Link>
               <div>
                 <p className=' line-clamp-1'>{item.title || item.name}</p>
@@ -122,8 +135,7 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
               )}
               {!explore && (
                 <>
-                  <div>person</div>
-                  <div>person</div>
+                  <p className='text-stone-500 text-sm'>{item.character}</p>
                 </>
               )}
             </div>

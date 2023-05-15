@@ -14,25 +14,25 @@ const page = () => {
       <ItemsCarousel
         urltype={'tv/popular'}
         title='Popular TV Shows'
-        type={'serie'}
+        type={'tv'}
         explore
       />
       <ItemsCarousel
         urltype={'/tv/top_rated'}
         title='Top Rated TV Shows'
-        type={'serie'}
+        type={'tv'}
         explore
       />
       <ItemsCarousel
         urltype={'/tv/on_the_air'}
         title='Currently Airing TV Shows'
-        type={'serie'}
+        type={'tv'}
         explore
       />
       <ItemsCarousel
         urltype={'/tv/airing_today'}
         title='TV Shows Airing Today'
-        type={'serie'}
+        type={'tv'}
         explore
       />
     </div>

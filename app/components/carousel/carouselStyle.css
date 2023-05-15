@@ -44,3 +44,30 @@
     }
   }
 }
+
+.imageComponentPoster {
+  outline: none;
+
+  background-color: #202124;
+  border-style: none;
+
+  [src=''] {
+    visibility: hidden;
+  }
+
+  [src] {
+    visibility: visible;
+    opacity: 0;
+    animation: fadeIn 500ms ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+}

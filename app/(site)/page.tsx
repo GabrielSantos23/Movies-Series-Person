@@ -17,7 +17,7 @@ export default function Home() {
       <ItemsCarousel
         urltype={'trending/tv/week'}
         title='Trending Series'
-        type={'serie'}
+        type={'tv'}
         explore
       />
     </div>
