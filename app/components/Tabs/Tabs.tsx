@@ -6,6 +6,9 @@ import Overview from '../DetailsComponents/Overview';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import EpisodeList from '../DetailsComponents/Episodes';
+import VideoList from '../DetailsComponents/VideoList';
+import Photos from '../DetailsComponents/Photos';
 
 interface TabsComponentProps {
   serie?: boolean;
@@ -14,7 +17,7 @@ interface TabsComponentProps {
 
 const TabStyle =
   'text-sm sm:text-lg tracking-[1px] pt-[10px] pb-[10px] font-medium text-stone-500 transition hover:text-gray-200 outline-none cursor-pointer  ';
-const TabPanelStyle = 'pl-10';
+const TabPanelStyle = 'lg:pl-10 p-5';
 const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   const params = useParams();
   const objectid = params;
@@ -94,7 +97,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   return (
     <div className=' mt-5 '>
       <Tabs className='flex flex-col '>
-        <TabList className='flex justify-center gap-12'>
+        <TabList className='flex justify-center lg:gap-12 gap-2'>
           <Tab className={TabStyle}>OVERVIEW</Tab>
           {serie && <Tab className={TabStyle}>EPISODES</Tab>}
           <Tab className={TabStyle}>VIDEOS</Tab>
@@ -113,9 +116,17 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
             serie={serie}
           />
         </TabPanel>
-        {serie && <TabPanel className={TabPanelStyle}>EPISODES</TabPanel>}
-        <TabPanel className={TabPanelStyle}>VIDEOS</TabPanel>
-        <TabPanel className={TabPanelStyle}>PHOTS</TabPanel>
+        {serie && (
+          <TabPanel className={TabPanelStyle}>
+            <EpisodeList id={id} />
+          </TabPanel>
+        )}
+        <TabPanel className={TabPanelStyle}>
+          <VideoList id={id} type={type} />
+        </TabPanel>
+        <TabPanel className={TabPanelStyle}>
+          <Photos id={id} type={type} />
+        </TabPanel>
       </Tabs>
     </div>
   );

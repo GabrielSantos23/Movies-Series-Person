@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Rating } from '@mui/material';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -5,7 +7,6 @@ import { motion } from 'framer-motion';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import Modal from '../modals/ModalSeries';
 import HelmetComponent from '../Helmet';
 
 interface HeaderMobileProps {

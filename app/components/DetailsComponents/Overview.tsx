@@ -1,4 +1,5 @@
 'use client';
+
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import '../carousel/carouselStyle.css';
 import Twitter from './../../../public/assets/twitter';
@@ -100,7 +101,7 @@ const Overview: React.FC<OverviewProps> = ({
                 </div>
               )}
 
-              {director.length > 0 && (
+              {director && (
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Director</dt>
@@ -109,7 +110,7 @@ const Overview: React.FC<OverviewProps> = ({
                 </div>
               )}
 
-              {item?.budget && (
+              {item?.budget ? (
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Budget</dt>
@@ -120,9 +121,9 @@ const Overview: React.FC<OverviewProps> = ({
                     </dd>
                   </>
                 </div>
-              )}
+              ) : null}
 
-              {item?.revenue && (
+              {item?.revenue ? (
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Revenue</dt>
@@ -133,9 +134,9 @@ const Overview: React.FC<OverviewProps> = ({
                     </dd>
                   </>
                 </div>
-              )}
+              ) : null}
 
-              {genres.length > 0 && (
+              {genres?.length > 0 && (
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Genres</dt>

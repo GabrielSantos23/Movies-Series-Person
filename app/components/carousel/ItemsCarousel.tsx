@@ -30,9 +30,6 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
   serie,
 }) => {
   const [items, setItems] = useState<any[]>([]);
-  const [showContent, setShowContent] = useState<boolean>(false);
-  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
