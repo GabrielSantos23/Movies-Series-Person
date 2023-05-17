@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
        
        `,
         secondary
-          ? 'text-gray-200 bg-stone-500 hover:bg-stone-600'
+          ? 'text-gray-200 bg-[#202124] hover:bg-[#18191C]'
           : 'text-gray-200',
         danger &&
           'bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600',

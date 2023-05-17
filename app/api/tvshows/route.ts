@@ -6,41 +6,41 @@ export async function POST(request: Request) {
   try {
     const currentUser = await getCurrentUser();
     const body = await request.json();
-    const { movieId } = body;
+    const { tvShowId } = body;
 
     if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const existingFavorite = await prisma.favoriteMovie.findFirst({
+    const existingFavorite = await prisma.FavoriteTvShows.findFirst({
       where: {
         userId: currentUser.id,
-        movieId: movieId,
+        tvShowId: tvShowId,
       },
     });
 
     if (existingFavorite) {
-      await prisma.favoriteMovie.delete({
+      await prisma.FavoriteTvShows.delete({
         where: {
           id: existingFavorite.id,
         },
       });
-      return NextResponse.json({ message: 'Movie removed from favorites' });
+      return NextResponse.json({ message: 'Tv Show removed from favorites' });
     }
 
-    const newFavorite = await prisma.favoriteMovie.create({
+    const newFavorite = await prisma.FavoriteTvShows.create({
       data: {
         userId: currentUser.id,
-        movieId: movieId,
+        tvShowId: tvShowId,
       },
     });
 
     return NextResponse.json({
-      message: 'Movie added to favorites',
+      message: 'Tv Show added to favorites',
       favorite: newFavorite,
     });
   } catch (error) {
-    console.log(error, 'Error saving movie to favorites');
+    console.log(error, 'Error saving tv show to favorites');
     return new NextResponse('Internal Error', { status: 500 });
   }
 }

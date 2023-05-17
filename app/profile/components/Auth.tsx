@@ -25,9 +25,7 @@ const Auth = () => {
       const fetchData = async () => {
         const session = await getSession();
         if (session) {
-          // Acesso aos dados do usuário na variável session.user
           console.log(session.user);
-          // Redirecionar para uma página específica
           router.push('/user');
         }
       };

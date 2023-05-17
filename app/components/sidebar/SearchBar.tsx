@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { IoMdClose } from 'react-icons/io';
 import Link from 'next/link';
@@ -27,6 +27,30 @@ const SearchBar: React.FC<Props> = ({
     config: { tension: 300, friction: 25 },
   });
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        handleSearchClick();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isOpen, handleSearchClick]);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
   return (
     <animated.div
       style={headerAnimation}
@@ -36,7 +60,9 @@ const SearchBar: React.FC<Props> = ({
         <input
           type='text'
           value={searchTerm}
-          onChange={(e: any) => setSearchTerm(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchTerm(e.target.value)
+          }
           onKeyUp={handleSubmit}
           placeholder='Search for a movie, tv show or person...'
           className='w-[85%] h-[50px] text-base bg-transparent border-none ml-[45px] text-white focus:outline-none'
