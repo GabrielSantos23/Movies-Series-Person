@@ -3,8 +3,9 @@
 import Header from '../components/headers/Header';
 import HelmetComponent from '../components/Helmet';
 import ItemsCarousel from '../components/carousel/ItemsCarousel';
+import getCurrentUser from '../actions/getCurrentUser';
 
-const page = () => {
+const page = async () => {
   return (
     <div>
       <HelmetComponent title={'TV Shows'} />

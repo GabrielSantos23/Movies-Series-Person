@@ -9,6 +9,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import HeaderMobile from './HeaderMobile';
+import { signIn, useSession, getSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   urltype: string;

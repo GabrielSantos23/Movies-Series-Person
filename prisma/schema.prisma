@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String?
@@ -20,50 +21,35 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // adiciona o campo 'favoritedMoviesIds'
-  favoritedMoviesIds String[] @db.ObjectId
-  favoritedMovies Movie[] @relation(fields: [favoritedMoviesIds], references: [id])
-
-  // adiciona o campo 'favoritedSeriesIds'
-  favoritedSeriesIds String[] @db.ObjectId
-  favoritedSeries Series[] @relation(fields: [favoritedSeriesIds], references: [id])
+  accounts Account[]
+  favoriteMovies FavoriteMovie[]
 
 }
 
-model Movie {
+model Account {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  description String?
-  releaseDate DateTime?
-  genre String?
-  runtime Int?
-  director String?
-  actors String[]
-  poster String?
-  trailerUrl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId String @db.ObjectId
+  type String 
+  provider String
+  providerAccountId String
+  refrash_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String? @db.String
+  session_state String? 
 
-  // adiciona o campo 'favoritedByUserIds'
-  favoritedByUserIds String[] @db.ObjectId
-  favoritedByUsers User[] @relation(fields: [favoritedByUserIds], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
-model Series {
+model FavoriteMovie {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  description String?
-  releaseDate DateTime?
-  genre String?
-  runtime Int?
-  director String?
-  actors String[]
-  poster String?
-  trailerUrl String?
+  userId String @db.ObjectId
+  movieId String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  // adiciona o campo 'favoritedByUserIds'
-  favoritedByUserIds String[] @db.ObjectId
-  favoritedByUsers User[] @relation(fields: [favoritedByUserIds], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

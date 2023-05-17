@@ -12,6 +12,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useSearchParams, useParams, usePathname } from 'next/navigation';
 import HelmetComponent from '../Helmet';
 import Button from '../Buttons/Button';
+import AddToFavoriteButton from '../Buttons/AddTofavorites';
 interface HeaderDetailsProps {
   type: 'movie' | 'tv';
   link: string;
@@ -194,6 +195,7 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
               <Button secondary onClick={watchTrailer}>
                 <BsFillPlayFill /> &nbsp; Watch Trailer
               </Button>
+              <AddToFavoriteButton id={id} type={type} />
             </div>
           </motion.div>
         </motion.div>

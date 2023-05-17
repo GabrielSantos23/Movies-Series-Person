@@ -1,6 +1,8 @@
 'use client';
 
 import Sidebar from './components/sidebar/Sidebar';
+import AuthContext from './context/AuthContext';
+import ToasterContext from './context/ToasterContext';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -14,13 +16,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='flex h-full'>
-          <Sidebar />
-
-          <div className='w-full lg:pl-[100px]'>
-            <div>{children}</div>
+        <AuthContext>
+          <div className='flex h-full'>
+            <Sidebar />
+            <ToasterContext />
+            <div className='w-full lg:pl-[100px]'>
+              <div>{children}</div>
+            </div>
           </div>
-        </div>
+        </AuthContext>
       </body>
     </html>
   );
