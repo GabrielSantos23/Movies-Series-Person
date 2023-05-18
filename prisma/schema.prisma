@@ -24,7 +24,7 @@ model User {
   accounts Account[]
 
   favoriteMovies FavoriteMovie[]
-  FavoriteTvShows FavoriteTvShows[]
+  favoriteTvShows FavoriteTvShows[]
 
 }
 

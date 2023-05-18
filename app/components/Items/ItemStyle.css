@@ -1,0 +1,25 @@
+.Image {
+  outline: none;
+  width: 100%;
+  background-color: #202124;
+  border-style: none;
+}
+
+.Image[src=''] {
+  visibility: hidden;
+}
+
+.Image[src] {
+  visibility: visible;
+  opacity: 0;
+  animation: fadeIn 500ms ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

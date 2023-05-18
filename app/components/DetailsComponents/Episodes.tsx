@@ -7,6 +7,7 @@ import Placeholder from '../../../public/assets/placeholder';
 import { format } from 'date-fns';
 // import Modal from './ModalSerie';
 import Placeholder16 from '../../../public/assets/placeholder16.jsx';
+import Modal from '../modals/Modal';
 
 interface EpisodeListProps {
   id: string;
@@ -85,13 +86,18 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ id }) => {
 
   return (
     <div>
-      {
-        showModal && ''
-        // <Modal
-        //   link={`https://embed.warezcdn.com/serie/${id}/${selectedSeason}/${selectedEpisode}`}
-        //   onClose={handleCloseModal}
-        // />
-      }
+      {showModal && (
+        <Modal video onClose={() => setShowModal(false)} isOpen={showModal}>
+          <div className='relative overflow-hidden w-full pt-[56.25%]'>
+            <iframe
+              src={`https://embed.warezcdn.com/serie/${id}/${selectedSeason}/${selectedEpisode}`}
+              className='absolute top-0 w-full h-full'
+              allowFullScreen
+              allow='picture-in-picture'
+            />
+          </div>
+        </Modal>
+      )}
       <div className='flex items-center gap-3 '>
         <select
           className='bg-[#202124] border-none rounded-sm p-3  text-sm min-w-[150px] focus:outline-none'

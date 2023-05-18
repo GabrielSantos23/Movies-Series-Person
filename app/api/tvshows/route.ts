@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const existingFavorite = await prisma.FavoriteTvShows.findFirst({
+    const existingFavorite = await prisma.favoriteTvShows.findFirst({
       where: {
         userId: currentUser.id,
         tvShowId: tvShowId,
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     });
 
     if (existingFavorite) {
-      await prisma.FavoriteTvShows.delete({
+      await prisma.favoriteTvShows.delete({
         where: {
           id: existingFavorite.id,
         },
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Tv Show removed from favorites' });
     }
 
-    const newFavorite = await prisma.FavoriteTvShows.create({
+    const newFavorite = await prisma.favoriteTvShows.create({
       data: {
         userId: currentUser.id,
         tvShowId: tvShowId,

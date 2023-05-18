@@ -12,6 +12,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
+import Placeholder from '../../../public/assets/placeholder';
+import Item from '@/app/components/Items/Item';
 
 interface Movie {
   id: number;
@@ -25,8 +27,11 @@ const Explorer = () => {
   const searchParams = useSearchParams();
   const title = searchParams.get('title');
   const urltype = searchParams.get('urltype');
+  const type = searchParams.get('type');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
+
+  console.log(movies);
 
   useEffect(() => {
     fetchMovies();
@@ -59,7 +64,6 @@ const Explorer = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(movies);
   return (
     <div>
       <HelmetComponent title={'Explore'} />
@@ -70,44 +74,13 @@ const Explorer = () => {
         hasMore={true}
         loader={<ClipLoader color='#1d9bf0' size={20} />}
       >
-        <div className='flex gap-2 ml-10 flex-wrap'>
+        <div className='flex gap-2 lg:ml-10 lg:justify-start justify-center flex-wrap'>
           {movies.map((movie) => (
-            <div className='flex flex-col rounded-sm w-[220px]' key={movie.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                alt={movie.title || movie.name}
-                className=''
-              />
-              <h2 className='font-normal text-base line-clamp-1'>
-                {movie.title || movie.name}
-              </h2>
-
-              <div className='flex items-center gap-3 '>
-                <Rating
-                  precision={0.5}
-                  readOnly
-                  size='small'
-                  sx={{
-                    fontSize: '15px',
-                    color: '#1d9bf0',
-                    height: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                  emptyIcon={
-                    <StarBorderIcon
-                      fontSize='inherit'
-                      style={{
-                        color: '#1d9bf0',
-                      }}
-                    />
-                  }
-                  value={movie?.vote_average / 2}
-                />
-                <div className='text-stone-500 text-sm'>
-                  {movie?.vote_average}
-                </div>
-              </div>
+            <div
+              className='flex flex-col rounded-sm w-[240px] mb-5'
+              key={movie.id}
+            >
+              <Item key={movie.id} item={movie} type={type} />
             </div>
           ))}
         </div>

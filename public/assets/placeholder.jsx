@@ -1,7 +1,7 @@
 import * as React from 'react';
 const Placeholder = (props) => (
   <svg
-    style={{ maxHeight: '350px', minWidth: '230px' }}
+    style={{ maxHeight: '370px', minWidth: '230px' }}
     viewBox='0 0 393 852'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -11,7 +11,7 @@ const Placeholder = (props) => (
     <rect fill='#000' />
     <rect
       x={126}
-      y={364}
+      y={370}
       width={142}
       height={124}
       fill='url(#pattern0)'

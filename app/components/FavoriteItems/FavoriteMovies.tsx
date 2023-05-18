@@ -7,6 +7,7 @@ const TMDBApiKey = process.env.NEXT_PUBLIC_API_KEY || '';
 const API_URL = 'https://api.themoviedb.org/3/movie/';
 import { ClipLoader } from 'react-spinners';
 import Link from 'next/link';
+import Item from '../Items/Item';
 
 interface Movie {
   id: number;
@@ -63,47 +64,16 @@ const FavoriteMovies = () => {
   console.log(favoriteMovies);
 
   return (
-    <div>
-      {isLoading ? ( // Verifica se está carregando
+    <div className='mb-10'>
+      {isLoading ? (
         <div className='flex justify-center items-center h-40'>
           <ClipLoader color='#1d9bf0' loading={isLoading} size={40} />
         </div>
-      ) : movies.length > 0 ? ( // Verifica se há filmes para exibir
-        <div className='flex flex-wrap gap-3'>
+      ) : movies.length > 0 ? (
+        <div className='flex flex-wrap lg:justify-start justify-center gap-3'>
           {movies.map((movie) => (
             <div className='flex flex-col' key={movie.id}>
-              <Link href={`/movie/${movie.id}`}>
-                <img
-                  className='w-64'
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={`${movie.title} poster`}
-                />
-              </Link>
-              <h3 className='max-w-[256px] line-clamp-1 mt-1'>{movie.title}</h3>
-              <div className='flex gap-3 items-center mt-1'>
-                <Rating
-                  precision={0.5}
-                  readOnly
-                  size='small'
-                  sx={{
-                    fontSize: '15px',
-                    color: '#1d9bf0',
-                    height: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                  emptyIcon={
-                    <StarBorderIcon
-                      fontSize='inherit'
-                      style={{
-                        color: '#1d9bf0',
-                      }}
-                    />
-                  }
-                  value={movie?.vote_average / 2}
-                />
-                <p className='text-stone-500 text-sm'>{movie?.vote_average}</p>
-              </div>
+              <Item item={movie} type={'tv'} />
             </div>
           ))}
         </div>

@@ -13,6 +13,7 @@ import { useSearchParams, useParams, usePathname } from 'next/navigation';
 import HelmetComponent from '../Helmet';
 import Button from '../Buttons/Button';
 import AddToFavoriteButton from '../Buttons/AddTofavorites';
+import Modal from '../modals/Modal';
 interface HeaderDetailsProps {
   type: 'movie' | 'tv';
   link: string;
@@ -30,19 +31,20 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const [showContent, setShowContent] = useState(false);
   const matches = useMediaQuery('(min-width:1100px)');
-  const [showModal, setShowModal] = useState(false);
   const [SocialMedia, setSocialMedia] = useState<any>([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   console.log(
     `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=en-US`
   );
 
   const handleEpisodeClick = () => {
-    setShowModal(true);
+    setModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -136,6 +138,18 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
           movie?.release_date || movie?.first_air_date
         ).getFullYear()})`}
       />
+      {modalOpen && (
+        <Modal video onClose={() => setModalOpen(false)} isOpen={modalOpen}>
+          <div className='relative overflow-hidden w-full pt-[56.25%]'>
+            <iframe
+              src={`${link}/${imdbid}`}
+              className='absolute top-0 w-full h-full'
+              allowFullScreen
+              allow='picture-in-picture'
+            />
+          </div>
+        </Modal>
+      )}
       <div className='w-full h-[70vh] hidden bg-black lg:flex'>
         <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
           <motion.div

@@ -1,5 +1,6 @@
 'use client';
 
+import CustomSwitch from './components/ProgressBar';
 import Sidebar from './components/sidebar/Sidebar';
 import AuthContext from './context/AuthContext';
 import ToasterContext from './context/ToasterContext';
@@ -21,7 +22,9 @@ export default function RootLayout({
             <Sidebar />
             <ToasterContext />
             <div className='w-full lg:pl-[100px]'>
-              <div>{children}</div>
+              <div>
+                <CustomSwitch>{children}</CustomSwitch>
+              </div>
             </div>
           </div>
         </AuthContext>

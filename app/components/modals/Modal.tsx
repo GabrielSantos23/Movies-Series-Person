@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, video }) => {
             className='
               fixed 
               inset-0 
-              bg-[#141414]
+              bg-[#202124]
               bg-opacity-75 
               transition-opacity
             '
@@ -66,7 +66,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, video }) => {
                   transform 
                   overflow-hidden 
                   rounded-lg 
-                  bg-gray-800
+                  bg-[#202124]
                   px-4 
                   pb-4
                   pt-5 
@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, video }) => {
                     type='button'
                     className={`
                       rounded-md 
-                      bg-gray-800
+                      bg-[#202124]
                    text-gray-100
                       hover:text-gray-500 
                 
@@ -106,7 +106,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, video }) => {
                     <span className='sr-only'>Close</span>
                     <IoClose
                       className={`h-6 w-6
-                bg-gray-800
+                bg-[#202124]
                     
                     
                     `}

@@ -10,6 +10,7 @@ import { Rating } from '@mui/material';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './carouselStyle.css';
 import Placeholder from './../../../public/assets/placeholder';
+import Item from '../Items/Item';
 
 interface ItemsCarouselProps {
   explore?: boolean;
@@ -61,13 +62,13 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
           <Link
             href={{
               pathname: '/explorer',
-              query: { title: title, urltype: urltype },
+              query: { title: title, urltype: urltype, type: type },
             }}
           >
             <div
               className={`${
                 type === 'similar'
-                  ? 'text-transparent'
+                  ? 'hidden'
                   : 'text-sky-500 hover:text-sky-600'
               }   transition  text-sm`}
             >
@@ -79,63 +80,13 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
       <div>
         <Carousel>
           {items?.map((item) => (
-            <div key={item.id} className=' '>
-              <Link href={`/${url ? url : type}/${item.id}`}>
-                {item.profile_path || item.poster_path ? (
-                  <LazyLoadImage
-                    src={
-                      type === 'person'
-                        ? `https://image.tmdb.org/t/p/original${item.profile_path}`
-                        : item.poster_path
-                        ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-                        : '/assets/placeholder.jsx'
-                    }
-                    alt={item.name || item.title}
-                    className='imageComponent min-w-[240px] min-h-[350px] bg-[#202124]'
-                    threshold={0}
-                    effect='opacity'
-                  />
-                ) : (
-                  <Placeholder />
-                )}
-              </Link>
-              <div>
-                <p className=' line-clamp-1'>{item.title || item.name}</p>
-              </div>
-              {explore && (
-                <div className='flex gap-2 mt-1'>
-                  <Rating
-                    precision={0.5}
-                    readOnly
-                    size='small'
-                    sx={{
-                      fontSize: '15px',
-                      color: '#1d9bf0',
-                      height: '20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                    emptyIcon={
-                      <StarBorderIcon
-                        fontSize='inherit'
-                        style={{
-                          color: '#1d9bf0',
-                        }}
-                      />
-                    }
-                    value={item?.vote_average / 2}
-                  />
-                  <p className='text-neutral-500 text-sm'>
-                    {item?.vote_average}
-                  </p>
-                </div>
-              )}
-              {!explore && (
-                <>
-                  <p className='text-stone-500 text-sm'>{item.character}</p>
-                </>
-              )}
-            </div>
+            <Item
+              key={item.id}
+              item={item}
+              type={type}
+              person={type === 'person'}
+              url={url}
+            />
           ))}
         </Carousel>
       </div>

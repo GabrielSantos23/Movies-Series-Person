@@ -7,7 +7,7 @@ import FavoriteTvShows from '../FavoriteItems/FavoriteTvShows';
 
 const TabStyle =
   'text-sm sm:text-lg tracking-[1px] pt-[10px] pb-[10px] font-medium text-stone-500 transition hover:text-gray-200 outline-none cursor-pointer  ';
-const TabPanelStyle = 'lg:pl-10 p-5';
+const TabPanelStyle = 'lg:pl-10 p-5  ';
 
 const ProfileTabs = ({}) => {
   return (
