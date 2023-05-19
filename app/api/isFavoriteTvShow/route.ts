@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const existingFavorite = await prisma.FavoriteTvShows.findFirst({
+    const existingFavorite = await prisma.favoriteTvShows.findFirst({
       where: {
         userId: currentUser.id,
         tvShowId: String(tvShowId),
