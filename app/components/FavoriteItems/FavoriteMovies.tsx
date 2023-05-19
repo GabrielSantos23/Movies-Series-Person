@@ -72,7 +72,7 @@ const FavoriteMovies = () => {
       ) : movies.length > 0 ? (
         <div className='flex flex-wrap lg:justify-start justify-center gap-3'>
           {movies.map((movie) => (
-            <div className='flex flex-col' key={movie.id}>
+            <div className='flex flex-col max-h-[370px]' key={movie.id}>
               <Item item={movie} type={'tv'} />
             </div>
           ))}

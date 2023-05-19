@@ -36,7 +36,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url }) => {
               transition={{ duration: 0.5 }}
             >
               <LazyLoadImage
-                className='Image min-h-[370px] max-h-[370px]'
+                className='Image min-h-[370px] '
                 src={
                   person
                     ? `https://image.tmdb.org/t/p/original${item.profile_path}`

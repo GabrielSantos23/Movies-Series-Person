@@ -70,7 +70,7 @@ const FavoriteTvShows = () => {
       ) : TvShows.length > 0 ? (
         <div className='flex flex-wrap gap-3  lg:justify-start justify-center'>
           {TvShows.map((tv) => (
-            <div className='flex flex-col' key={tv.id}>
+            <div className='flex flex-col max-h-[370px]' key={tv.id}>
               <Item item={tv} type={'tv'} />
             </div>
           ))}
