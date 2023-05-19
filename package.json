@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
     "@headlessui/react": "^1.7.14",
     "@mapbox/node-pre-gyp": "^1.0.10",
     "@mui/material": "^5.13.0",
@@ -20,6 +21,7 @@
     "@types/react-lazy-load-image-component": "^1.5.3",
     "@vidstack/react": "^0.5.3",
     "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
