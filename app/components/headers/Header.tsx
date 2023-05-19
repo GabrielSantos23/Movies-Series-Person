@@ -123,9 +123,7 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
               transition={{ type: 'linear', duration: 0.5 }}
             >
               <Link
-                href={
-                  movie.name ? `/series/${movie.id}` : `/movies/${movie.id}`
-                }
+                href={movie.name ? `/tv/${movie.id}` : `/movie/${movie.id}`}
               >
                 <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
                   {movie?.title || movie?.name}
