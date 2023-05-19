@@ -91,8 +91,8 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
           {child}
         </SwiperSlide>
       ))}
-      <SwiperArrowLeft className=' h-full top-0 left-0 bg-[#00000090] border-none text-white text-xs w-[30px]' />
-      <SwiperArrowRight className=' h-full top-0 right-0 bg-[#00000090] border-none text-white text-xs w-[30px]' />
+      <SwiperArrowLeft className='swiper-button-prev' />
+      <SwiperArrowRight className='swiper-button-next' />
     </Swiper>
   );
 };

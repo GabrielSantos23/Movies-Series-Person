@@ -3,6 +3,7 @@
 import Header from '../components/headers/Header';
 import HelmetComponent from '../components/Helmet';
 import ItemsCarousel from '../components/carousel/ItemsCarousel';
+import Footer from '../components/Footer/Footer';
 
 const page = () => {
   return (
@@ -35,6 +36,7 @@ const page = () => {
         type={'movie'}
         explore
       />
+      <Footer />
     </div>
   );
 };

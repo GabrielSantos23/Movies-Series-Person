@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Header from '../components/headers/Header';
 import HelmetComponent from '../components/Helmet';
 import ItemsCarousel from '../components/carousel/ItemsCarousel';
+import Footer from '../components/Footer/Footer';
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         type={'tv'}
         explore
       />
+      <Footer />
     </div>
   );
 }
