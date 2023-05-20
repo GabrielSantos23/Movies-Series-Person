@@ -74,7 +74,7 @@ const FavoriteTvShows = () => {
               className='flex flex-col max-h-[370px] min-h-[370px]'
               key={tv.id}
             >
-              <Item item={tv} type={'tv'} />
+              <Item item={tv} type={'tv'} user />
             </div>
           ))}
         </div>
