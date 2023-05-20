@@ -73,7 +73,7 @@ const FavoriteMovies = () => {
         <div className='flex flex-wrap lg:justify-start justify-center gap-3  max-h-[370px] min-h-[370px]'>
           {movies.map((movie) => (
             <div className='flex flex-col' key={movie.id}>
-              <Item item={movie} type={'tv'} />
+              <Item item={movie} type={'tv'} user />
             </div>
           ))}
         </div>

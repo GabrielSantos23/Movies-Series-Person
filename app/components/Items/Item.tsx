@@ -22,9 +22,10 @@ interface ItemProps {
   type?: string | null;
   person?: boolean;
   url?: string;
+  user?: boolean;
 }
 
-const Item: React.FC<ItemProps> = ({ item, type, person, url }) => {
+const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
   return (
     <div className='flex flex-col '>
       <div className='bg-[#202124]'>
@@ -36,7 +37,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url }) => {
               transition={{ duration: 0.5 }}
             >
               <LazyLoadImage
-                className='Image min-h-[370px] '
+                className={`Image min-h-[370px] ${user && 'max-h-[370px]'} `}
                 src={
                   person
                     ? `https://image.tmdb.org/t/p/original${item.profile_path}`
