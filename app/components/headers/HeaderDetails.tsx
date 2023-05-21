@@ -217,7 +217,7 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
           <motion.img
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 2, type: 'linear' }}
+            transition={{ duration: 0.5, delay: 1, type: 'linear' }}
             src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
             alt={movie?.name || movie?.title}
             className='h-full w-full right-0 opacity-70 object-cover '
