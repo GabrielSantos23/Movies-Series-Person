@@ -40,7 +40,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: imageLoaded ? 1 : 0 }}
-              transition={{ duration: 0.5, type: 'linear' }}
+              transition={{ duration: 0.5, type: 'linear', delay: 1 }}
             >
               <LazyLoadImage
                 className={`Image min-h-[370px] ${user && 'max-h-[370px]'} `}
