@@ -26,15 +26,21 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
-    <div className='flex flex-col '>
+    <div className='flex flex-col'>
       <div className='bg-[#202124]'>
         <Link href={`/${url ? url : type}/${item.id}`}>
           {item.poster_path || item.profile_path ? (
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1, type: 'linear' }}
+              animate={{ opacity: imageLoaded ? 1 : 0 }}
+              transition={{ duration: 0.5, type: 'linear' }}
             >
               <LazyLoadImage
                 className={`Image min-h-[370px] ${user && 'max-h-[370px]'} `}
@@ -48,6 +54,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
                 alt={item.title || item.name}
                 threshold={0}
                 effect='opacity'
+                afterLoad={handleImageLoad}
               />
             </motion.div>
           ) : (
