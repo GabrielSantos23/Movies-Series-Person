@@ -36,12 +36,12 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
     <div className='flex flex-col'>
       <div className='bg-[#202124]'>
         <Link href={`/${url ? url : type}/${item.id}`}>
-          {item.poster_path || item.profile_path ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: imageLoaded ? 1 : 0 }}
-              transition={{ duration: 0.5, type: 'linear', delay: 0.5 }}
-            >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.5, type: 'linear' }}
+          >
+            {item.profile_path || item.poster_path ? (
               <LazyLoadImage
                 className={`Image min-h-[370px] ${user && 'max-h-[370px]'} `}
                 src={
@@ -55,11 +55,12 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
                 threshold={0}
                 effect='opacity'
                 afterLoad={handleImageLoad}
+                placeholderSrc='/assets/placeholder.png'
               />
-            </motion.div>
-          ) : (
-            <Placeholder />
-          )}
+            ) : (
+              <Placeholder />
+            )}
+          </motion.div>
         </Link>
       </div>
 
