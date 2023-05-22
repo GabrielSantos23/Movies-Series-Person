@@ -1,5 +1,10 @@
 import * as React from 'react';
-const Placeholder16 = ({ width }) => (
+
+interface Placeholder16props {
+  width?: number;
+}
+
+const Placeholder16: React.FC<Placeholder16props> = ({ width }) => (
   <svg
     width={width}
     height={'220px'}
