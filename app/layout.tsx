@@ -1,5 +1,7 @@
 'use client';
 
+import IndexCookies from './components/Cookies/IndexCookies';
+import InstallButton from './components/Cookies/InstallButton';
 import CustomSwitch from './components/ProgressBar';
 import Sidebar from './components/sidebar/Sidebar';
 import AuthContext from './context/AuthContext';
@@ -25,11 +27,14 @@ export default function RootLayout({
         <AuthContext>
           <div className='flex h-full'>
             <Sidebar />
+
             <ToasterContext />
             <div className='w-full lg:pl-[100px]'>
               <div>
                 <CustomSwitch>{children}</CustomSwitch>
               </div>
+
+              <IndexCookies />
             </div>
           </div>
         </AuthContext>

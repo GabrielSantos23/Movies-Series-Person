@@ -54,7 +54,7 @@ const SearchBar: React.FC<Props> = ({
   return (
     <animated.div
       style={headerAnimation}
-      className='h-[80px]  lg:ml-[100px] w-full  bg-[#202124] fixed  top-0 z-[9999] '
+      className='h-[80px]  lg:ml-[100px] w-full  bg-[#202124] fixed  top-0 z-[99999] '
     >
       <div className='flex  flex-row  items-center h-full' ref={inputRef}>
         <input

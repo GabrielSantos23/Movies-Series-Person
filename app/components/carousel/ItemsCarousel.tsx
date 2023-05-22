@@ -51,8 +51,6 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
     fetchData();
   }, []);
 
-  console.log(items);
-
   return (
     <>
       {items.length !== 0 && (

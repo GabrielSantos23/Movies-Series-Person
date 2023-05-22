@@ -39,7 +39,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
-            transition={{ duration: 0.5, type: 'linear' }}
+            transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
           >
             <LazyLoadImage
               className={`Image min-h-[370px] ${
@@ -63,7 +63,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
       </div>
 
       <p className='line-clamp-1'>{item.title || item.name} </p>
-      {!person && (
+      {!person && item?.vote_average !== 0 && (
         <div className='flex gap-3 items-center'>
           <Rating
             precision={0.5}
@@ -89,7 +89,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
           <p className='text-stone-500 text-sm'>{item?.vote_average}</p>
         </div>
       )}
-      {person && (
+      {person && item?.vote_average !== 0 && (
         <>
           <p className='text-stone-500 text-sm'>{item.character}</p>
         </>
