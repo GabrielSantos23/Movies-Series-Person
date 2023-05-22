@@ -1,5 +1,5 @@
 import * as React from 'react';
-const Placeholder = (props) => (
+const Placeholder = (props: any) => (
   <svg
     style={{ maxHeight: '370px', minWidth: '230px' }}
     viewBox='0 0 393 852'
