@@ -45,10 +45,25 @@ const InstallButton = () => {
     }
   }, [cookies]);
 
-  window.addEventListener('beforeinstallprompt', (event: any) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener(
+          'beforeinstallprompt',
+          handleBeforeInstallPrompt
+        );
+      }
+    };
+  }, []);
+
+  const handleBeforeInstallPrompt = (event: any) => {
     event.preventDefault();
     setDeferredPrompt(event);
-  });
+  };
 
   if (!isComponentOpen) {
     return null; // Retorna nulo se o componente estiver fechado
