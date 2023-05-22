@@ -21,7 +21,7 @@ const TabPanelStyle = 'lg:pl-10 p-5';
 const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   const params = useParams();
   const objectid = params;
-  const id = objectid.movieid || objectid.tvid;
+  const id = (objectid && objectid.movieid) || (objectid && objectid.tvid);
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 

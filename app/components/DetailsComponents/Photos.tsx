@@ -6,10 +6,11 @@ import { MdRefresh } from 'react-icons/md';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './PhotosStyles.css';
 import Modal from '../modals/Modal';
-// import 'react-lazy-load-image-component/src/effects/blur.css';
+import { motion } from 'framer-motion';
+import PlaceholderImage from '../../../public/assets/placeholder';
 
 interface PhotosProps {
-  id: string;
+  id: string | string[] | null;
   type: any;
 }
 
@@ -20,6 +21,12 @@ const Photos: React.FC<PhotosProps> = ({ type, id }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   useEffect(() => {
     const getMoviePhotos = async () => {
@@ -62,19 +69,31 @@ const Photos: React.FC<PhotosProps> = ({ type, id }) => {
 
       <div className='flex flex-wrap gap-3 items-center'>
         {Backdrop.map((poster: any, index: any) => (
-          <div key={index} className='bg-[#202124]'>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.5, type: 'linear' }}
+            key={index}
+            className='bg-[#202124]'
+          >
             <LazyLoadImage
+              className='PhotoStyle w-[400px] bg-[#202124]'
               key={poster.file_path}
               src={`https://image.tmdb.org/t/p/w500${poster.file_path}`}
               alt={poster.file_path}
+              threshold={0}
               effect='opacity'
+              afterLoad={handleImageLoad}
+              onError={(e: any) => {
+                e.target.src = <PlaceholderImage />;
+              }}
               onClick={() => {
                 setSelectedImage(poster.file_path);
                 setModalIsOpen(true);
               }}
-              className='PhotoStyle'
+              placeholderSrc='/assets/placeholder.png'
             />
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -93,7 +112,10 @@ const Photos: React.FC<PhotosProps> = ({ type, id }) => {
         }}
       >
         {Poster.map((poster: any, index: any) => (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.5, type: 'linear' }}
             key={index}
             style={{
               backgroundColor: '#202124',
@@ -103,14 +125,20 @@ const Photos: React.FC<PhotosProps> = ({ type, id }) => {
               key={poster.file_path}
               src={`https://image.tmdb.org/t/p/w500${poster.file_path}`}
               alt={poster.file_path}
+              threshold={0}
               effect='opacity'
+              afterLoad={handleImageLoad}
+              onError={(e: any) => {
+                e.target.src = <PlaceholderImage />;
+              }}
               onClick={() => {
                 setSelectedImage(poster.file_path);
                 setModalIsOpen(true);
               }}
               className='PhotoStyle'
+              placeholderSrc='/assets/placeholder.png'
             />
-          </div>
+          </motion.div>
         ))}
       </div>
 

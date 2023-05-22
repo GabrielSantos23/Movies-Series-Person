@@ -11,6 +11,7 @@ import HelmetComponent from '../../components/Helmet';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Placeholder from '../../../public/assets/placeholder';
+import Item from '@/app/components/Items/Item';
 
 const Search = () => {
   const [searchResult, setSearchResult] = useState<any>([]);
@@ -18,7 +19,7 @@ const Search = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const query = searchParams.get('q');
+  const query = searchParams && searchParams.get('q');
   // const query = router.query.q;
 
   const posterRef = useRef(null);
@@ -74,76 +75,18 @@ const Search = () => {
       >
         {searchResult.map((result: any, index: any) => (
           <div className='flex flex-col flex-wrap  items-start' key={index}>
-            <div
-              style={{
-                backgroundColor: '#202124',
-                width: '230px',
-                height: '350px',
-              }}
-            >
-              <Link
-                href={
+            <div className='w-[250px]'>
+              <Item
+                item={result}
+                type={
                   result.media_type === 'tv'
-                    ? `/tv/${result.id}`
+                    ? `tv`
                     : result.media_type === 'movie'
-                    ? `/movie/${result.id}`
-                    : `/person/${result.id}`
+                    ? `movie`
+                    : `person`
                 }
-              >
-                {result.poster_path || result.profile_path ? (
-                  <LazyLoadImage
-                    className='outline-none w-full h-[350px] bg-[#202124]'
-                    src={
-                      result.poster_path || result.profile_path
-                        ? `https://image.tmdb.org/t/p/w500/${
-                            result.poster_path || result.profile_path
-                          }`
-                        : placeholder.toString()
-                    }
-                    onError={(e: any) => {
-                      e.target.onerror = null;
-                      e.target.src = placeholder;
-                    }}
-                    threshold={0}
-                    effect='opacity'
-                  />
-                ) : (
-                  <Placeholder />
-                )}
-              </Link>
+              />
             </div>
-
-            <div className='text-base max-w-[220px] mt-3  line-clamp-1'>
-              {result.title || result.name}
-            </div>
-            {result?.vote_average ? (
-              <div className='flex items-center gap-3'>
-                <Rating
-                  precision={0.5}
-                  readOnly
-                  size='small'
-                  sx={{
-                    fontSize: '15px',
-                    color: '#1d9bf0',
-                    height: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                  emptyIcon={
-                    <StarBorderIcon
-                      fontSize='inherit'
-                      style={{
-                        color: '#1d9bf0',
-                      }}
-                    />
-                  }
-                  value={result?.vote_average / 2}
-                />
-                <p className='text-stone-500 text-sm'>{result?.vote_average}</p>
-              </div>
-            ) : (
-              ''
-            )}
           </div>
         ))}
       </InfiniteScroll>

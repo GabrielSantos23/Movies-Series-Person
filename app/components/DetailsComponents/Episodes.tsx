@@ -5,12 +5,12 @@ import axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Placeholder from '../../../public/assets/placeholder';
 import { format } from 'date-fns';
-// import Modal from './ModalSerie';
-import Placeholder16 from '../../../public/assets/placeholder16.jsx';
+import Placeholder16 from '../../../public/assets/placeholder16';
+
 import Modal from '../modals/Modal';
 
 interface EpisodeListProps {
-  id: string;
+  id: string | string[] | null;
 }
 
 const EpisodeList: React.FC<EpisodeListProps> = ({ id }) => {
@@ -19,6 +19,12 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ id }) => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -124,38 +130,31 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ id }) => {
           >
             <div
               onClick={() => handleEpisodeClick(episode.episode_number)}
-              style={{
-                backgroundColor: '#202124',
-
-                maxWidth: '400px',
-              }}
+              className='min-h-[220px]  '
             >
-              {episode.still_path ? (
-                <LazyLoadImage
-                  style={{
-                    backgroundColor: '#202124',
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  src={`https://image.tmdb.org/t/p/w500${episode.still_path}`}
-                  alt={episode.name}
-                  threshold={0}
-                  effect='opacity'
-                />
-              ) : (
-                <Placeholder16 width={'400px'} />
-              )}
+              <LazyLoadImage
+                className=' bg-[#202124] cursor-pointer md:w-[400px] w-[300px] object-cover h-[250px] '
+                src={
+                  episode.still_path
+                    ? `https://image.tmdb.org/t/p/w500${episode.still_path}`
+                    : '/assets/placeholderLG.png'
+                }
+                alt={episode.name}
+                threshold={0}
+                effect='opacity'
+                afterLoad={handleImageLoad}
+              />
             </div>
             <div style={{ display: 'flex', gap: '5px' }}>
               <p style={{ color: '#1d9bf0', fontWeight: '500' }}>
                 E{episode.episode_number.toString().padStart(2, '0')}
               </p>
-              <p style={{ maxWidth: '380px', fontWeight: '400' }}>
+              <p className='lg:max-w-[380px] max-w-[300px] font-normal'>
                 {episode.name}
               </p>
             </div>
             <div>
-              <div className='line-clamp-2 text-stone-500 text-xs max-w-[350px]'>
+              <div className='line-clamp-2 text-stone-500 text-xs lg:w-[350px] w-[300px]'>
                 {episode.overview}
               </div>
             </div>
@@ -172,47 +171,5 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ id }) => {
     </div>
   );
 };
-
-// const Image = styled(LazyLoadImage)`
-//   border: 0;
-//   outline: none;
-//   width: 100%;
-//   height: 380px;
-//   background-color: #202124;
-//   border-style: none;
-//   cursor: pointer;
-//   &[src=''] {
-//     visibility: hidden;
-//   }
-
-//   &[src] {
-//     visibility: visible;
-//     opacity: 0;
-//     animation: fadeIn 500ms ease-in-out forwards;
-//   }
-
-//   &:hover {
-//     opacity: 0.8;
-//   }
-
-//   @keyframes fadeIn {
-//     from {
-//       opacity: 0;
-//     }
-//     to {
-//       opacity: 1;
-//     }
-//   }
-// `;
-
-// const Overview = styled.p`
-//   display: -webkit-box;
-//   -webkit-line-clamp: 4;
-//   -webkit-box-orient: vertical;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-//   max-width: 400px;
-//   font-size: 12px;
-// `;
 
 export default EpisodeList;

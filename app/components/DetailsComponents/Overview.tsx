@@ -1,5 +1,5 @@
 'use client';
-
+import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import '../carousel/carouselStyle.css';
 import Twitter from './../../../public/assets/twitter';
@@ -8,6 +8,7 @@ import Instagram from './../../../public/assets/instagram';
 import Imdb from './../../../public/assets/Imdb';
 import WebsiteIcon from './../../../public/assets/website';
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+import { motion } from 'framer-motion';
 
 import ItemsCarousel from '../carousel/ItemsCarousel';
 interface OverviewProps {
@@ -16,7 +17,7 @@ interface OverviewProps {
   genres: any;
   ProductionCompanies: any;
   SocialMedia: any;
-  id: string;
+  id: string | string[] | null;
   seasons: any[];
   type: any;
   serie?: boolean;
@@ -37,6 +38,12 @@ const Overview: React.FC<OverviewProps> = ({
   const dtStyle = 'basis-[30%] shrink-0 font-light';
   const ddStyle = 'basis-[70%] font-light';
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   const runtimeMinutes =
     item?.runtime || (item?.episode_run_time && item?.episode_run_time[0]) || 0;
   let runtimeFormatted;
@@ -51,15 +58,22 @@ const Overview: React.FC<OverviewProps> = ({
   return (
     <>
       <div className='flex  flex-col lg:flex-row mt-10 gap-5 mb-10'>
-        <div className='flex justify-center lg:justify-start'>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: imageLoaded ? 1 : 0 }}
+          transition={{ duration: 0.5, type: 'linear' }}
+          className='flex justify-center lg:justify-start'
+        >
           <LazyLoadImage
             className='imageComponentPoster min-w-[300px] lg:min-w-[400px]'
             src={item?.poster_path ? imageUrl : '/assets/placeholder.png'}
-            alt=''
+            alt={item.title || item.name}
             threshold={0}
             effect='opacity'
+            afterLoad={handleImageLoad}
+            placeholderSrc='/assets/placeholder.png'
           />
-        </div>
+        </motion.div>
         <div>
           {item.overview && (
             <>

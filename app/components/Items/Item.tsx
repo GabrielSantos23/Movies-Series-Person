@@ -41,25 +41,23 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
             animate={{ opacity: imageLoaded ? 1 : 0 }}
             transition={{ duration: 0.5, type: 'linear' }}
           >
-            {item.profile_path || item.poster_path ? (
-              <LazyLoadImage
-                className={`Image min-h-[370px] ${user && 'max-h-[370px]'} `}
-                src={
-                  person
-                    ? `https://image.tmdb.org/t/p/original${item.profile_path}`
-                    : item.poster_path
-                    ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-                    : '/assets/placeholder.jsx'
-                }
-                alt={item.title || item.name}
-                threshold={0}
-                effect='opacity'
-                afterLoad={handleImageLoad}
-                placeholderSrc='/assets/placeholder.png'
-              />
-            ) : (
-              <Placeholder />
-            )}
+            <LazyLoadImage
+              className={`Image min-h-[370px] ${
+                user && 'max-h-[370px] min-w-[250px]'
+              } `}
+              src={
+                person && item.profile_path
+                  ? `https://image.tmdb.org/t/p/original${item.profile_path}`
+                  : item.poster_path
+                  ? `https://image.tmdb.org/t/p/original${item.poster_path}`
+                  : '/assets/placeholder.png'
+              }
+              alt={item.title || item.name}
+              threshold={0}
+              effect='opacity'
+              afterLoad={handleImageLoad}
+              placeholderSrc='/assets/placeholder.png'
+            />
           </motion.div>
         </Link>
       </div>

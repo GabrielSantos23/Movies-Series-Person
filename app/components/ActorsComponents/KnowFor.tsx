@@ -9,7 +9,7 @@ import Link from 'next/link';
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
 interface ActorKnowForProps {
-  id: string;
+  id: string | string[] | null;
 }
 
 const ActorKnowFor: React.FC<ActorKnowForProps> = ({ id }) => {

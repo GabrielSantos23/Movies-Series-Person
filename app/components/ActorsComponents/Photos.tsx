@@ -6,7 +6,7 @@ import Modal from '../modals/Modal';
 // import 'react-lazy-load-image-component/src/effects/blur.css';
 
 interface ActorPhotosProps {
-  id: string;
+  id: string | string[] | null;
 }
 
 const ActorPhotos: React.FC<ActorPhotosProps> = ({ id }) => {

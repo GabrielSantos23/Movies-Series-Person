@@ -25,9 +25,9 @@ interface Movie {
 
 const Explorer = () => {
   const searchParams = useSearchParams();
-  const title = searchParams.get('title');
-  const urltype = searchParams.get('urltype');
-  const type = searchParams.get('type');
+  const title = searchParams && searchParams.get('title');
+  const urltype = searchParams && searchParams.get('urltype');
+  const type = searchParams && searchParams.get('type');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
 

@@ -11,7 +11,8 @@ const CustomSwitch = ({ children }: { children: React.ReactNode }) => {
   });
 
   const [progress, setProgress] = useState(false);
-  const [prevLoc, setPrevLoc] = useState('');
+  const [prevLoc, setPrevLoc] = useState<string | null>(null);
+
   const pathname = usePathname();
 
   useEffect(() => {

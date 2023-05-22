@@ -23,7 +23,7 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
   const params = useParams();
   const objectid = params;
 
-  const id = objectid.movieid || objectid.tvid;
+  const id = (objectid && objectid.movieid) || (objectid && objectid.tvid);
   const [showImage, setShowImage] = useState(false);
   const [movie, setMovie] = useState<any>([]);
   const [numReviews, setNumReviews] = useState(null);
@@ -34,6 +34,12 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
   const [SocialMedia, setSocialMedia] = useState<any>([]);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   console.log(
     `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=en-US`
@@ -132,109 +138,117 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
 
   const imdbid = movie?.imdb_id ? movie?.imdb_id : SocialMedia?.imdb_id;
   return (
-    <>
-      <HelmetComponent
-        title={`${movie?.title || movie?.name} (${new Date(
-          movie?.release_date || movie?.first_air_date
-        ).getFullYear()})`}
-      />
-      {modalOpen && (
-        <Modal video onClose={() => setModalOpen(false)} isOpen={modalOpen}>
-          <div className='relative overflow-hidden w-full pt-[56.25%]'>
-            <iframe
-              src={`${link}/${imdbid}`}
-              className='absolute top-0 w-full h-full'
-              allowFullScreen
-              allow='picture-in-picture'
-            />
-          </div>
-        </Modal>
-      )}
-      <div className='w-full h-[70vh] hidden bg-black lg:flex'>
-        <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: 'linear', duration: 0.5 }}
-          >
-            <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
-              {movie?.title || movie?.name}
-            </h1>
-            <div className='flex gap-2 mt-5'>
-              <Rating
-                precision={0.5}
-                readOnly
-                size='small'
-                sx={{
-                  fontSize: '20px',
-                  color: '#1d9bf0',
-                  height: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                emptyIcon={
-                  <StarBorderIcon
-                    fontSize='inherit'
-                    style={{
-                      color: '#1d9bf0',
-                    }}
-                  />
-                }
-                value={movie?.vote_average / 2}
-              />
-              <p className='text-neutral-500'>{numReviews} Reviews</p>
-              {movie?.release_date && !movie?.media_type && (
-                <p className='text-neutral-500'>
-                  {new Date(movie.release_date).getFullYear()}
-                </p>
-              )}
-
-              {movie?.number_of_seasons ? (
-                <p className='text-neutral-500'>
-                  {movie?.number_of_seasons}&nbsp;
-                  {movie?.number_of_seasons > 1 ? 'seasons' : 'season'}
-                </p>
-              ) : (
-                ''
-              )}
-              {usRating && <p className='text-neutral-500'>{usRating} </p>}
-            </div>
-            <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
-              {movie?.overview}
-            </div>
-            <div className='flex items-center gap-2 mt-5'>
-              <Button onClick={() => handleEpisodeClick()}>
-                <BsFillPlayFill /> &nbsp; Watch Now
-              </Button>
-              <Button secondary onClick={watchTrailer}>
-                <BsFillPlayFill /> &nbsp; Watch Trailer
-              </Button>
-              <AddToFavoriteButton id={id} type={type} />
-            </div>
-          </motion.div>
-        </motion.div>
-        <div className='w-[70%] absolute right-0 flex items-end flex-end h-[70vh]'>
-          <motion.img
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1, type: 'linear' }}
-            src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
-            alt={movie?.name || movie?.title}
-            className='h-full w-full right-0 opacity-70 object-cover '
-            style={{ width: '100%', height: '100%' }}
+    <div className='h-[70vh] bg-black'>
+      {movie && (
+        <>
+          <HelmetComponent
+            title={`${movie?.title || movie?.name} (${new Date(
+              movie?.release_date || movie?.first_air_date
+            ).getFullYear()})`}
           />
-        </div>
-      </div>
+          {modalOpen && (
+            <Modal video onClose={() => setModalOpen(false)} isOpen={modalOpen}>
+              <div className='relative overflow-hidden w-full pt-[56.25%]'>
+                <iframe
+                  src={`${link}/${imdbid}`}
+                  className='absolute top-0 w-full h-full'
+                  allowFullScreen
+                  allow='picture-in-picture'
+                />
+              </div>
+            </Modal>
+          )}
+          <div className='w-full  hidden bg-black lg:flex'>
+            <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ type: 'linear', duration: 0.5 }}
+              >
+                <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
+                  {movie?.title || movie?.name}
+                </h1>
+                <div className='flex gap-2 mt-5'>
+                  <Rating
+                    precision={0.5}
+                    readOnly
+                    size='small'
+                    sx={{
+                      fontSize: '20px',
+                      color: '#1d9bf0',
+                      height: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                    emptyIcon={
+                      <StarBorderIcon
+                        fontSize='inherit'
+                        style={{
+                          color: '#1d9bf0',
+                        }}
+                      />
+                    }
+                    value={movie?.vote_average / 2}
+                  />
+                  <p className='text-neutral-500'>{numReviews} Reviews</p>
+                  {movie?.release_date && !movie?.media_type && (
+                    <p className='text-neutral-500'>
+                      {new Date(movie.release_date).getFullYear()}
+                    </p>
+                  )}
 
-      <HeaderMobile
-        showImage={showImage}
-        movie={movie}
-        numSeasons={movie?.number_of_seasons}
-        numReviews={numReviews}
-        usRating={usRating}
-        showContent={showContent}
-      />
-    </>
+                  {movie?.number_of_seasons ? (
+                    <p className='text-neutral-500'>
+                      {movie?.number_of_seasons}&nbsp;
+                      {movie?.number_of_seasons > 1 ? 'seasons' : 'season'}
+                    </p>
+                  ) : (
+                    ''
+                  )}
+                  {usRating && <p className='text-neutral-500'>{usRating} </p>}
+                </div>
+                <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
+                  {movie?.overview}
+                </div>
+                <div className='flex items-center gap-2 mt-5'>
+                  <Button onClick={() => handleEpisodeClick()}>
+                    <BsFillPlayFill /> &nbsp; Watch Now
+                  </Button>
+                  <Button secondary onClick={watchTrailer}>
+                    <BsFillPlayFill /> &nbsp; Watch Trailer
+                  </Button>
+                  <AddToFavoriteButton id={id} type={type} />
+                </div>
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: imageLoaded ? 1 : 0 }}
+              transition={{ duration: 0.5, type: 'linear' }}
+              className='w-[70%] absolute right-0 flex items-end flex-end h-[70vh]'
+            >
+              <LazyLoadImage
+                className='h-full w-full right-0 opacity-70 object-cover '
+                src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+                alt={movie?.name || movie?.title}
+                threshold={0}
+                effect='opacity'
+                afterLoad={handleImageLoad}
+              />
+            </motion.div>
+          </div>
+
+          <HeaderMobile
+            showImage={showImage}
+            movie={movie}
+            numSeasons={movie?.number_of_seasons}
+            numReviews={numReviews}
+            usRating={usRating}
+            showContent={showContent}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

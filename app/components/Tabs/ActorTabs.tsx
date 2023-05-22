@@ -16,7 +16,7 @@ const TabPanelStyle = '';
 const ActorTabs = ({}) => {
   const params = useParams();
   const objectid = params;
-  const id = objectid.personid;
+  const id = objectid && objectid.personid;
   return (
     <div className=' mt-5 mb-10'>
       <Tabs className='flex flex-col '>

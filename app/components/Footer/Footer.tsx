@@ -1,11 +1,29 @@
-import React from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { AiOutlineMail, AiFillLinkedin, AiFillGithub } from 'react-icons/ai';
 import Link from 'next/link';
 
 const p = 'text-stone-500 text-sm';
-const icon = 'text-lg text-stone-500  hover:text-white transition ';
+const icon = 'text-lg text-stone-500 hover:text-white transition ';
 
 const Footer = () => {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowContent(true);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  if (!showContent) {
+    return null;
+  }
+
   return (
     <footer className='ml-10 pb-10 '>
       <p className={p}>

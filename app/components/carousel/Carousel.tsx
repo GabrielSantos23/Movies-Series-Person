@@ -26,7 +26,9 @@ const SwiperArrowLeft: React.FC<SwiperArrowProps> = ({
 }) => (
   <button
     onClick={onClick}
-    className={`${className} ${isBeginning ? 'swiper-button-disabled' : ''}`}
+    className={`swiper-button-prev ${className} ${
+      isBeginning ? 'swiper-button-disabled' : ''
+    }`}
     aria-hidden='true'
     aria-disabled={isBeginning}
     type='button'
@@ -40,7 +42,9 @@ const SwiperArrowRight: React.FC<SwiperArrowProps> = ({
 }) => (
   <button
     onClick={onClick}
-    className={`${className} ${isEnd ? 'swiper-button-disabled' : ''}`}
+    className={`swiper-button-next ${className} ${
+      isEnd ? 'swiper-button-disabled' : ''
+    }`}
     aria-hidden='true'
     aria-disabled={isEnd}
     type='button'

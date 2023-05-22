@@ -51,46 +51,54 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
     fetchData();
   }, []);
 
-  return (
-    <div
-      className={`py-10 ${type !== 'person' && type !== 'similar' && 'pl-10'}`}
-    >
-      <div className='flex items-center gap-2 pb-5 '>
-        <p className='text-xl   '>{title}</p>
+  console.log(items);
 
-        {explore && (
-          <Link
-            href={{
-              pathname: '/explorer',
-              query: { title: title, urltype: urltype, type: type },
-            }}
-          >
-            <div
-              className={`${
-                type === 'similar'
-                  ? 'hidden'
-                  : 'text-sky-500 hover:text-sky-600'
-              }   transition  text-sm`}
-            >
-              Explore all
-            </div>
-          </Link>
-        )}
-      </div>
-      <div>
-        <Carousel>
-          {items?.map((item) => (
-            <Item
-              key={item.id}
-              item={item}
-              type={type}
-              person={type === 'person'}
-              url={url}
-            />
-          ))}
-        </Carousel>
-      </div>
-    </div>
+  return (
+    <>
+      {items.length !== 0 && (
+        <div
+          className={`py-10 ${
+            type !== 'person' && type !== 'similar' && 'pl-10'
+          }`}
+        >
+          <div className='flex items-center gap-2 pb-5 '>
+            <p className='text-xl   '>{title}</p>
+
+            {explore && (
+              <Link
+                href={{
+                  pathname: '/explorer',
+                  query: { title: title, urltype: urltype, type: type },
+                }}
+              >
+                <div
+                  className={`${
+                    type === 'similar'
+                      ? 'hidden'
+                      : 'text-sky-500 hover:text-sky-600'
+                  }   transition  text-sm`}
+                >
+                  Explore all
+                </div>
+              </Link>
+            )}
+          </div>
+          <div>
+            <Carousel>
+              {items?.map((item) => (
+                <Item
+                  key={item.id}
+                  item={item}
+                  type={type}
+                  person={type === 'person'}
+                  url={url}
+                />
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ import TopBarProgress from 'react-topbar-progress-indicator';
 import { signIn, useSession, getSession } from 'next-auth/react';
 
 interface AddToFavoriteButtonProps {
-  id: string;
+  id: string | string[] | null;
   type: string;
 }
 

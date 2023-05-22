@@ -20,7 +20,8 @@ const ActorBody = () => {
 
   const params = useParams();
   const objectid = params;
-  const id = objectid.personid;
+  const id = objectid && objectid.personid;
+
   const [SocialMedia, setSocialMedia] = useState<any>([]);
 
   useEffect(() => {
