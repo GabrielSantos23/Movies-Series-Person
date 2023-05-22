@@ -65,21 +65,22 @@ const FavoriteMovies = () => {
 
   return (
     <div className='mb-10'>
-      {isLoading ? (
+      {isLoading && (
         <div className='flex justify-center items-center h-40'>
           <ClipLoader color='#1d9bf0' loading={isLoading} size={40} />
         </div>
-      ) : movies.length > 0 ? (
-        <div className='flex flex-wrap lg:justify-start justify-center gap-3  max-h-[370px] min-h-[370px]'>
-          {movies.map((movie) => (
-            <div className='flex flex-col' key={movie.id}>
-              <Item item={movie} type={'movie'} user />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className='flex justify-center'>No movies favorited</div>
       )}
+      <>
+        {movies && !isLoading ? (
+          <div className='flex flex-wrap lg:justify-start justify-center gap-3  max-h-[370px] min-h-[370px]'>
+            {movies.map((movie) => (
+              <div className='flex flex-col' key={movie.id}>
+                <Item item={movie} type={'movie'} user />
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </>
     </div>
   );
 };

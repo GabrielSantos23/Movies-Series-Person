@@ -11,7 +11,7 @@ interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({ imageUrl }) => {
   return (
     <div className='relative'>
-      <div className='relative inline-block rounded-md overflow-hidden h-9 w-9 md:h-32 md:w-32'>
+      <div className='relative inline-block rounded-md overflow-hidden  md:h-32 md:w-32 w-24 h-24'>
         {imageUrl === 'null' ? (
           <Logo />
         ) : (

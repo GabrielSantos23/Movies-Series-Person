@@ -63,11 +63,13 @@ const FavoriteTvShows = () => {
 
   return (
     <div className='mb-10'>
-      {isLoading ? (
+      {isLoading && (
         <div className='flex justify-center items-center h-40 '>
           <ClipLoader color='#1d9bf0' loading={isLoading} size={40} />
         </div>
-      ) : TvShows.length > 0 ? (
+      )}
+
+      {TvShows && !isLoading && (
         <div className='flex flex-wrap gap-3  lg:justify-start justify-center'>
           {TvShows.map((tv) => (
             <div
@@ -78,8 +80,6 @@ const FavoriteTvShows = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <div className='flex justify-center'>No Tv shows favorited</div>
       )}
     </div>
   );

@@ -1,7 +1,6 @@
 'use client';
 
 import IndexCookies from './components/Cookies/IndexCookies';
-import InstallButton from './components/Cookies/InstallButton';
 import CustomSwitch from './components/ProgressBar';
 import Sidebar from './components/sidebar/Sidebar';
 import AuthContext from './context/AuthContext';

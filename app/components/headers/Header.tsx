@@ -137,28 +137,32 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
                     </h1>
                   </Link>
                   <div className='flex gap-2 mt-5'>
-                    <Rating
-                      precision={0.5}
-                      readOnly
-                      size='small'
-                      sx={{
-                        fontSize: '20px',
-                        color: '#1d9bf0',
-                        height: '20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                      emptyIcon={
-                        <StarBorderIcon
-                          fontSize='inherit'
-                          style={{
-                            color: '#1d9bf0',
-                          }}
-                        />
-                      }
-                      value={movie?.vote_average / 2}
-                    />
-                    <p className='text-neutral-500'>{numReviews} Reviews</p>
+                    {movie?.vote_average && (
+                      <Rating
+                        precision={0.5}
+                        readOnly
+                        size='small'
+                        sx={{
+                          fontSize: '20px',
+                          color: '#1d9bf0',
+                          height: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                        emptyIcon={
+                          <StarBorderIcon
+                            fontSize='inherit'
+                            style={{
+                              color: '#1d9bf0',
+                            }}
+                          />
+                        }
+                        value={movie?.vote_average / 2}
+                      />
+                    )}
+                    {numReviews && (
+                      <p className='text-neutral-500'>{numReviews} Reviews</p>
+                    )}
                     {movie?.release_date && !movie?.media_type && (
                       <p className='text-neutral-500'>
                         {new Date(movie.release_date).getFullYear()}

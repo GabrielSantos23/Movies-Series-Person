@@ -43,7 +43,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
           >
             <LazyLoadImage
               className={`Image min-h-[370px] ${
-                user && 'max-h-[370px] min-w-[250px]'
+                user && 'max-h-[370px] max-w-[250px] min-w-[250px]'
               } `}
               src={
                 person && item.profile_path
@@ -62,7 +62,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
         </Link>
       </div>
 
-      <p className='line-clamp-1'>{item.title || item.name} </p>
+      <p className='line-clamp-1 max-w-[250px]'>{item.title || item.name} </p>
       {!person && item?.vote_average !== 0 && (
         <div className='flex gap-3 items-center'>
           <Rating
