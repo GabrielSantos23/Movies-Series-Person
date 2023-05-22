@@ -85,6 +85,9 @@ const Search = () => {
                     ? `movie`
                     : `person`
                 }
+                person={
+                  result.media_type !== 'tv' && result.media_type !== 'movie'
+                }
               />
             </div>
           </div>
