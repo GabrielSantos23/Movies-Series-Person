@@ -158,7 +158,7 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
               </div>
             </Modal>
           )}
-          <div className='w-full  hidden bg-black lg:flex'>
+          <div className='w-full relative hidden bg-black lg:flex'>
             <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
@@ -225,10 +225,10 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: imageLoaded ? 1 : 0 }}
               transition={{ duration: 0.5, type: 'linear' }}
-              className='w-[70%] absolute right-0 flex items-end flex-end h-[70vh]'
+              className='w-[70%]  right-0 flex items-end flex-end h-[100%]'
             >
               <LazyLoadImage
-                className='h-full w-full right-0 opacity-70 object-cover '
+                className='h-[70vh] absolute w-full right-0 opacity-70 object-cover '
                 src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
                 alt={movie?.name || movie?.title}
                 threshold={0}

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import '../carousel/carouselStyle.css';
 import Twitter from './../../../public/assets/twitter';
@@ -11,6 +11,7 @@ const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 import { motion } from 'framer-motion';
 
 import ItemsCarousel from '../carousel/ItemsCarousel';
+import Link from 'next/link';
 interface OverviewProps {
   item: any;
   director: any;
@@ -114,12 +115,20 @@ const Overview: React.FC<OverviewProps> = ({
                   </>
                 </div>
               )}
-
               {director && (
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Director</dt>
-                    <dd className={ddStyle}>{director}</dd>
+                    {director.map((dir: any, index: number) => (
+                      <React.Fragment key={dir.id}>
+                        <Link href={`/person/${dir.id}`}>
+                          <dd className={`${ddStyle} text-sky-500 underline`}>
+                            {dir.name}
+                          </dd>
+                        </Link>
+                        {index < director.length - 1 && <span>,&nbsp;</span>}
+                      </React.Fragment>
+                    ))}
                   </>
                 </div>
               )}

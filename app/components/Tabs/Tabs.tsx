@@ -31,7 +31,6 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   const [ProductionCompanies, setProductionCompanies] = useState([]);
   const [SocialMedia, setSocialMedia] = useState([]);
   const [seasons, setSeasons] = useState([]);
-
   useEffect(() => {
     if (id && apiKey && type) {
       if (type === 'movie' || type === 'tv') {
@@ -50,26 +49,12 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
               )
               .then((response) => {
                 const credits = response.data.credits;
-                const director = credits.crew.find(
-                  (person: any) => person.job === 'Director'
-                );
-                const genres = results.genres.map((genre: any) => genre.name);
-                setDirector(director?.name);
-                if (
-                  credits.crew.filter(
-                    (person: any) => person.job === 'Director'
-                  ).length > 1
-                ) {
-                  setDirector(
-                    credits.crew
-                      .filter((person: any) => person.job === 'Director')
-                      .map((person: any) => person.name)
-                      .join(', ')
-                  );
-                } else {
-                  setDirector(director?.name);
-                }
 
+                const director = credits.crew
+                  .filter((person: any) => person.job === 'Director')
+                  .map((director: any) => director);
+                const genres = results.genres.map((genre: any) => genre.name);
+                setDirector(director);
                 setGenres(genres.join(', '));
               });
           });
@@ -94,6 +79,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   }, []);
   if (!movie) return null;
 
+  console.log(director);
   return (
     <div className=' mt-5 '>
       <Tabs className='flex flex-col '>
