@@ -55,7 +55,8 @@ const Overview: React.FC<OverviewProps> = ({
     const runtimeMinutesRemainder = runtimeMinutes % 60;
     runtimeFormatted = `${runtimeHours}h ${runtimeMinutesRemainder}min`;
   }
-
+  {
+  }
   return (
     <>
       <div className='flex  flex-col lg:flex-row mt-10 gap-5 mb-10'>
@@ -115,10 +116,13 @@ const Overview: React.FC<OverviewProps> = ({
                   </>
                 </div>
               )}
-              {director && (
+
+              {director?.length > 0 && (
                 <div className='flex items-start'>
                   <>
-                    <dt className={dtStyle}>Director</dt>
+                    <dt className={dtStyle}>
+                      {type === 'tv' ? 'Creator' : 'Director'}
+                    </dt>
                     {director.map((dir: any, index: number) => (
                       <React.Fragment key={dir.id}>
                         <Link href={`/person/${dir.id}`}>
@@ -163,7 +167,23 @@ const Overview: React.FC<OverviewProps> = ({
                 <div className='flex items-start'>
                   <>
                     <dt className={dtStyle}>Genres</dt>
-                    <dd className={ddStyle}>{genres}</dd>
+                    <dd className={`${ddStyle} flex flex-wrap`}>
+                      {genres.map((genre: any, index: number) => (
+                        <React.Fragment key={genre.id}>
+                          <Link
+                            href={{
+                              pathname: `/genre/${genre.id}`,
+                              query: { type: type, title: genre.name },
+                            }}
+                          >
+                            <dd className={`${ddStyle} text-sky-500 underline`}>
+                              {genre.name}
+                            </dd>
+                          </Link>
+                          {index < genres.length - 1 && <span>,&nbsp;</span>}
+                        </React.Fragment>
+                      ))}
+                    </dd>
                   </>
                 </div>
               )}

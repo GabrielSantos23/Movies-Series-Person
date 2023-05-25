@@ -16,6 +16,7 @@ interface HeaderMobileProps {
   numReviews: number | null;
   usRating: string | null;
   showContent: boolean;
+  handleEpisodeClick: () => void;
 }
 
 const HeaderMobile: React.FC<HeaderMobileProps> = ({
@@ -25,6 +26,7 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
   numReviews,
   usRating,
   showContent,
+  handleEpisodeClick,
   //   showModal,
   //   imdbid,
   //   link,
@@ -90,14 +92,16 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
           <div className='mt-5 text-sm mb-5 w-full line-clamp-2 '>
             {movie?.overview}
           </div>
-        </div>
-        <div className='w-full h-full flex items-center justify-center'>
-          <Image
-            width={50}
-            height={50}
-            src='/assets/play-button-svgrepo-com.svg'
-            alt='play button'
-          />
+          <div className='flex absolute w-[90vw] pl-[-40px] h-full z-[99999999999999999] items-center justify-center'>
+            <button onClick={handleEpisodeClick}>
+              <Image
+                width={50}
+                height={50}
+                src='/assets/play-button-svgrepo-com.svg'
+                alt='play button'
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

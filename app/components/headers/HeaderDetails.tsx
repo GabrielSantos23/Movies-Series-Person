@@ -245,6 +245,7 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
             numReviews={numReviews}
             usRating={usRating}
             showContent={showContent}
+            handleEpisodeClick={handleEpisodeClick}
           />
         </>
       )}

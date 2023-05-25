@@ -31,6 +31,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   const [ProductionCompanies, setProductionCompanies] = useState([]);
   const [SocialMedia, setSocialMedia] = useState([]);
   const [seasons, setSeasons] = useState([]);
+  const [creator, setCreator] = useState([]);
   useEffect(() => {
     if (id && apiKey && type) {
       if (type === 'movie' || type === 'tv') {
@@ -43,20 +44,39 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
             setMovie(results);
             setSeasons(results.seasons);
             const movieId = results.id;
-            axios
-              .get(
-                `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits`
-              )
-              .then((response) => {
-                const credits = response.data.credits;
+            if (type === 'movie') {
+              axios
+                .get(
+                  `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${apiKey}&append_to_response=credits`
+                )
+                .then((response) => {
+                  const credits = response.data.credits;
+                  console.log(response);
 
-                const director = credits.crew
-                  .filter((person: any) => person.job === 'Director')
-                  .map((director: any) => director);
-                const genres = results.genres.map((genre: any) => genre.name);
-                setDirector(director);
-                setGenres(genres.join(', '));
-              });
+                  const director = credits.crew
+                    .filter((person: any) => person.job === 'Director')
+                    .map((director: any) => director);
+                  const genres = results.genres.map((genre: any) => genre);
+                  setDirector(director);
+                  setGenres(genres);
+                });
+            } else {
+              axios
+                .get(
+                  `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${apiKey}&append_to_response=credits&append_to_response=created_by`
+                )
+                .then((response) => {
+                  console.log(response);
+
+                  const director = response.data.created_by.map(
+                    (creator: any) => creator
+                  );
+                  const genres = results.genres.map((genre: any) => genre);
+                  console.log(genres);
+                  setCreator(director);
+                  setGenres(genres);
+                });
+            }
           });
         axios
           .get(
@@ -79,7 +99,6 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
   }, []);
   if (!movie) return null;
 
-  console.log(director);
   return (
     <div className=' mt-5 '>
       <Tabs className='flex flex-col '>
@@ -92,7 +111,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ serie, type }) => {
         <TabPanel className={TabPanelStyle}>
           <Overview
             item={movie}
-            director={director}
+            director={type === 'tv' ? creator : director}
             genres={genres}
             ProductionCompanies={ProductionCompanies}
             SocialMedia={SocialMedia}

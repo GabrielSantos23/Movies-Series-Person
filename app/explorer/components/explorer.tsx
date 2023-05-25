@@ -30,6 +30,7 @@ const Explorer = () => {
   const type = searchParams && searchParams.get('type');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   console.log(movies);
 
@@ -52,8 +53,12 @@ const Explorer = () => {
           poster_path: movie.poster_path,
           vote_average: movie.vote_average,
         }));
-        setMovies((prevMovies) => [...prevMovies, ...newMovies]);
-        setPage((prevPage) => prevPage + 1);
+        if (data.results.length > 0) {
+          setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+          setPage((prevPage) => prevPage + 1);
+        } else {
+          setHasMore(false);
+        }
       })
       .catch((error) => {
         console.log('Error fetching movies:', error);
@@ -71,8 +76,12 @@ const Explorer = () => {
       <InfiniteScroll
         dataLength={movies.length}
         next={fetchMovies}
-        hasMore={true}
-        loader={<ClipLoader color='#1d9bf0' size={20} />}
+        hasMore={hasMore}
+        loader={
+          <div className='flex justify-center items-center mb-10  '>
+            <ClipLoader color='#1d9bf0' size={20} />
+          </div>
+        }
       >
         <div className='flex gap-2 lg:ml-10 lg:justify-start justify-center flex-wrap'>
           {movies.map((movie) => (
