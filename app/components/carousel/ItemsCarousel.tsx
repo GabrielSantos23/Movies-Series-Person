@@ -60,7 +60,7 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
           }`}
         >
           <div className='flex items-center gap-2 pb-5 '>
-            <p className='text-xl   '>{title}</p>
+            <p className='text-xl'>{title}</p>
 
             {explore && (
               <Link

@@ -16,7 +16,7 @@ interface HeaderMobileProps {
   numReviews: number | null;
   usRating: string | null;
   showContent: boolean;
-  handleEpisodeClick: () => void;
+  handleEpisodeClick?: () => void;
 }
 
 const HeaderMobile: React.FC<HeaderMobileProps> = ({
