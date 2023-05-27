@@ -6,6 +6,8 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import React from 'react';
 import './carouselStyle.css';
+import styled from 'styled-components';
+
 SwiperCore.use([Navigation, Pagination]);
 
 interface SwiperArrowProps {
@@ -88,16 +90,39 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
     },
   };
 
+  const StyledSwiper = styled(Swiper)`
+    .swiper-button-prev {
+      height: 90%;
+      top: 0;
+      left: 0;
+      background-color: #00000090;
+      border: none;
+      color: white;
+      font-size: 10px;
+      width: 30px;
+    }
+    .swiper-button-next {
+      height: 90%;
+      top: 0;
+      right: 0;
+      background-color: #00000090;
+      border: none;
+      color: white;
+      font-size: 10px;
+      width: 30px;
+    }
+  `;
+
   return (
-    <Swiper {...swiperOptions}>
+    <StyledSwiper {...swiperOptions}>
       {React.Children.map(children, (child) => (
         <SwiperSlide key={child.key} className='card-home'>
           {child}
         </SwiperSlide>
       ))}
-      <SwiperArrowLeft className='swiper-button-prev' />
-      <SwiperArrowRight className='swiper-button-next' />
-    </Swiper>
+      <SwiperArrowLeft />
+      <SwiperArrowRight />
+    </StyledSwiper>
   );
 };
 
