@@ -7,6 +7,7 @@ import ProfileTabs from '@/app/components/Tabs/ProfileTabs';
 import NameModal from '@/app/components/modals/NameModal';
 import useLoadImage from '@/hooks/useLoadImage';
 import useNameModal from '@/hooks/useNameModal';
+import useSubscribeModal from '@/hooks/useSubscribeModal';
 import { useUser } from '@/hooks/useUser';
 import {
   useSessionContext,
@@ -22,11 +23,12 @@ const Body = () => {
   // const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<any>([]);
-  const { user, userDetails } = useUser();
+  const { user, userDetails, subscription } = useUser();
   const supabaseClient = useSupabaseClient();
   const { session } = useSessionContext();
 
   const namemodal = useNameModal();
+  const Submodal = useSubscribeModal();
 
   useEffect(() => {
     if (user && userDetails && !userDetails.full_name) {
@@ -55,6 +57,14 @@ const Body = () => {
     toast.success('Logged out');
   };
 
+  const VipHandler = () => {
+    if (!subscription) {
+      Submodal.onOpen();
+    }
+  };
+
+  console.log(subscription);
+
   return (
     <>
       {loading ? (
@@ -62,9 +72,16 @@ const Body = () => {
       ) : (
         <>
           <div className='flex pl-10 mt-10 justify-between items-center'>
-            <div className='flex flex-col gap-5'>
+            <div className='flex gap-5'>
               <Avatar imageUrl={`${loadImage}`} />
-              <div>{userDetails?.full_name}</div>
+              <div>
+                <p className='text-2xl '>{userDetails?.full_name}</p>
+                <button onClick={VipHandler}>
+                  <p className='p-1.5 border border-sky-500'>
+                    {subscription ? 'VIP' : 'Get VIP'}
+                  </p>
+                </button>
+              </div>
             </div>
             <div className='pr-10 flex flex-col gap-y-4 '>
               <Button secondary onClick={handleLogout}>

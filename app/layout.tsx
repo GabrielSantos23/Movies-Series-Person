@@ -9,6 +9,7 @@ import { Inter } from 'next/font/google';
 import UserProvider from '@/providers/UserProvider';
 import ModalProvider from '@/providers/ModalProvider';
 import ToasterProvider from '@/providers/ToasterProvider';
+import getActiveProductsWithPrices from './actions/getActiveProductsWithPrices';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,11 +18,12 @@ export const metadata = {
   description: 'A plataform free for you to watch TV shows and Movies',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const products = await getActiveProductsWithPrices();
   return (
     <html lang='en'>
       <head>
@@ -33,7 +35,7 @@ export default function RootLayout({
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
-            <ModalProvider />
+            <ModalProvider products={products} />
             <div className='flex h-full'>
               <Sidebar />
               <div className='w-full lg:pl-[100px]'>

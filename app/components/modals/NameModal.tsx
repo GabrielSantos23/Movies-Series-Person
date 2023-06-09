@@ -16,8 +16,14 @@ import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 
 import uniqid from 'uniqid';
 import Button2 from '../Buttons/Button2';
+import SubscribeModal from './SubscribeModal';
+import { ProductWithPrice } from '@/types';
 
-const NameModal = () => {
+interface ModalProviderProps {
+  products: ProductWithPrice[];
+}
+
+const NameModal: React.FC<ModalProviderProps> = ({ products }) => {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
   const { session } = useSessionContext();
@@ -101,6 +107,7 @@ const NameModal = () => {
     }
   }, [session, router, onClose]);
 
+  console.log(products);
   return (
     <Modal2
       title='Set your name'

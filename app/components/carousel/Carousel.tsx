@@ -92,7 +92,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
 
   const StyledSwiper = styled(Swiper)`
     .swiper-button-prev {
-      height: 90%;
+      height: 370px;
       top: 0;
       left: 0;
       background-color: #00000090;
@@ -102,7 +102,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
       width: 30px;
     }
     .swiper-button-next {
-      height: 90%;
+      height: 370px;
       top: 0;
       right: 0;
       background-color: #00000090;

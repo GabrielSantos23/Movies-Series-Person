@@ -2,6 +2,8 @@
 
 import AuthModal from '@/app/components/modals/AuthModal';
 import NameModal from '@/app/components/modals/NameModal';
+import SubscribeModal from '@/app/components/modals/SubscribeModal';
+import { ProductWithPrice } from '@/types';
 import {
   useSessionContext,
   useSupabaseClient,
@@ -9,7 +11,11 @@ import {
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const ModalProvider = () => {
+interface ModalProviderProps {
+  products: ProductWithPrice[];
+}
+
+const ModalProvider: React.FC<ModalProviderProps> = ({ products }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -23,7 +29,8 @@ const ModalProvider = () => {
   return (
     <>
       <AuthModal />
-      <NameModal />
+      <NameModal products={products} />
+      <SubscribeModal products={products} />
     </>
   );
 };

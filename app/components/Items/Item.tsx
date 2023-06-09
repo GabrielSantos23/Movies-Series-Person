@@ -135,21 +135,7 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, userImage }) => {
               placeholderSrc='/assets/placeholder.png'
             />
 
-            {type === 'movie' && (
-              <div
-                className={`${'absolute w-full hidden  group-hover:transition-all group-hover:block h-full top-0 backdrop-blur-[4px] group-hover:bg-zinc-800/50'}  `}
-              >
-                <div className='flex items-center justify-center h-full'>
-                  <BsFillPlayFill size={40} />
-                </div>
-                <div className='flex justify-end h-full items-start w-full top-0 absolute pt-3 pr-3 '>
-                  <button onClick={(event) => handleSubmit(event)}>
-                    <Icon size={20} />
-                  </button>
-                </div>
-              </div>
-            )}
-            {type === 'tv' && (
+            {type !== 'person' && (
               <div
                 className={`${'absolute w-full hidden  group-hover:transition-all group-hover:block h-full top-0 backdrop-blur-[4px] group-hover:bg-zinc-800/50'}  `}
               >
