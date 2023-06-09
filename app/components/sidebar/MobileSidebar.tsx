@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@/hooks/useUser';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -13,17 +14,18 @@ interface SidebarMobileProps {
   isOpen: boolean;
 }
 
-const links = [
-  { icon: <RiHomeLine />, href: '/' || '' },
-  { icon: <MdOutlineMovieCreation />, href: '/movies' },
-  { icon: <BiTv />, href: '/tv' },
-  { icon: <AiOutlineUser />, href: '/profile' },
-];
 const MobileSidebar: React.FC<SidebarMobileProps> = ({
   handleSearchClick,
   isOpen,
 }) => {
   const pathname = usePathname();
+  const { user } = useUser();
+  const links = [
+    { icon: <RiHomeLine />, href: '/' || '' },
+    { icon: <MdOutlineMovieCreation />, href: '/movies' },
+    { icon: <BiTv />, href: '/tv' },
+    { icon: <AiOutlineUser />, href: user?.id ? '/user' : '/profile' },
+  ];
 
   return (
     <div className='fixed z-[999] right-0 lg:hidden flex bg-black w-full bottom-0 h-[80px]  '>

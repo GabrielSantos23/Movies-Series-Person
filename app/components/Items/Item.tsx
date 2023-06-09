@@ -1,13 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ItemStyle.css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Placeholder from '@/public/assets/placeholder';
 import { Rating } from '@mui/material';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { motion } from 'framer-motion';
+import { BsBookmark, BsFillBookmarkFill, BsFillPlayFill } from 'react-icons/bs';
+import useAuthModal from '@/hooks/useAuthModal';
+import { useSessionContext } from '@supabase/auth-helpers-react';
+import { useUser } from '@/hooks/useUser';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface ItemProps {
   item: {
@@ -22,15 +28,84 @@ interface ItemProps {
   type?: string | null;
   person?: boolean;
   url?: string;
-  user?: boolean;
+  userImage?: boolean;
 }
 
-const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
-  const [imageLoaded, setImageLoaded] = React.useState(false);
+const Item: React.FC<ItemProps> = ({ item, type, person, url, userImage }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const authModal = useAuthModal();
+  const { supabaseClient } = useSessionContext();
+  const { user } = useUser();
+  const router = useRouter();
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
+  useEffect(() => {
+    if (!user?.id) {
+      return;
+    }
+    const Ttype = type === 'movie' ? 'liked_movies' : 'liked_tvshows';
+    const TypeId = type === 'movie' ? 'movie_id' : 'serie_id';
+
+    const fetchData = async () => {
+      const { data, error } = await supabaseClient
+        .from(Ttype)
+        .select('*')
+        .eq('user_id', user.id)
+        .eq(TypeId, item.id)
+        .single();
+
+      if (!error && data) {
+        setIsFavorite(true);
+      }
+    };
+    fetchData();
+  }, [item.id, supabaseClient, user?.id]);
+
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    if (!user) {
+      setIsLoading(false);
+      return authModal.onOpen();
+    }
+    const Ttype = type === 'movie' ? 'liked_movies' : 'liked_tvshows';
+    const TypeId = type === 'movie' ? 'movie_id' : 'serie_id';
+
+    if (isFavorite) {
+      const { error } = await supabaseClient
+        .from(Ttype)
+        .delete()
+        .eq('user_id', user.id)
+        .eq(TypeId, item.id);
+      if (error) {
+        toast.error(error.message);
+        setIsLoading(false);
+      } else {
+        setIsFavorite(false);
+        setIsLoading(false);
+      }
+    } else {
+      const { error } = await supabaseClient.from(Ttype).insert({
+        [TypeId]: item.id,
+        user_id: user.id,
+      });
+      if (error) {
+        toast.error(error.message);
+      } else {
+        setIsFavorite(true);
+        toast.success('Liked');
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const Icon = isFavorite ? BsFillBookmarkFill : BsBookmark;
 
   return (
     <div className='flex flex-col'>
@@ -40,10 +115,11 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
             transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
+            className='relative group  group-hover:transition-all'
           >
             <LazyLoadImage
               className={`Image min-h-[370px] ${
-                user && 'max-h-[370px] max-w-[250px] min-w-[250px]'
+                userImage && 'max-h-[370px] max-w-[250px] min-w-[250px]'
               } `}
               src={
                 person && item.profile_path
@@ -58,6 +134,35 @@ const Item: React.FC<ItemProps> = ({ item, type, person, url, user }) => {
               afterLoad={handleImageLoad}
               placeholderSrc='/assets/placeholder.png'
             />
+
+            {type === 'movie' && (
+              <div
+                className={`${'absolute w-full hidden  group-hover:transition-all group-hover:block h-full top-0 backdrop-blur-[4px] group-hover:bg-zinc-800/50'}  `}
+              >
+                <div className='flex items-center justify-center h-full'>
+                  <BsFillPlayFill size={40} />
+                </div>
+                <div className='flex justify-end h-full items-start w-full top-0 absolute pt-3 pr-3 '>
+                  <button onClick={(event) => handleSubmit(event)}>
+                    <Icon size={20} />
+                  </button>
+                </div>
+              </div>
+            )}
+            {type === 'tv' && (
+              <div
+                className={`${'absolute w-full hidden  group-hover:transition-all group-hover:block h-full top-0 backdrop-blur-[4px] group-hover:bg-zinc-800/50'}  `}
+              >
+                <div className='flex items-center justify-center h-full'>
+                  <BsFillPlayFill size={40} />
+                </div>
+                <div className='flex justify-end h-full items-start w-full top-0 absolute pt-3 pr-3 '>
+                  <button onClick={(event) => handleSubmit(event)}>
+                    <Icon size={20} />
+                  </button>
+                </div>
+              </div>
+            )}
           </motion.div>
         </Link>
       </div>
