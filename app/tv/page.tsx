@@ -3,7 +3,7 @@
 import Header from '../components/headers/Header';
 import HelmetComponent from '../components/Helmet';
 import ItemsCarousel from '../components/carousel/ItemsCarousel';
-import getCurrentUser from '../actions/getCurrentUser';
+
 import Footer from '../components/Footer/Footer';
 
 const page = async () => {
