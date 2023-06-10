@@ -27,7 +27,22 @@ const formatPrice = (price: Price) => {
 const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
   const subscribeModal = useSubscribeModal();
   const { user, isLoading, subscription } = useUser();
+  const [loading, setLoading] = useState(false);
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
+
+  const redirectToCustomerPortal = async () => {
+    try {
+      const { url, error } = await postData({
+        url: '/api/create-portal-link',
+      });
+      window.location.assign(url);
+    } catch (error) {
+      if (error) {
+        toast.error((error as Error).message);
+      }
+    }
+    setLoading(true);
+  };
 
   const onChange = (open: boolean) => {
     if (!open) {
@@ -87,7 +102,27 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
   }
 
   if (subscription) {
-    content = <div className='text-center'>Already subscribed.</div>;
+    content = (
+      <div className='flex items-center justify-center'>
+        <div>
+          {subscription && (
+            <div className='flex flex-col gap-y-4'>
+              <p className='text-center'>
+                You are currently on the{' '}
+                <b>{subscription?.prices?.products?.name}</b> Plan
+              </p>
+              <Button2
+                className='w-[300px] text-white bg-sky-500  '
+                disabled={loading || isLoading}
+                onClick={redirectToCustomerPortal}
+              >
+                Open customer portal
+              </Button2>
+            </div>
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (

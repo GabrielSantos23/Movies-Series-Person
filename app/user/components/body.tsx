@@ -2,6 +2,7 @@
 
 import Avatar from '@/app/components/Avatar';
 import Button from '@/app/components/Buttons/Button';
+import HelmetComponent from '@/app/components/Helmet';
 import Loading from '@/app/components/Loadings/loading';
 import ProfileTabs from '@/app/components/Tabs/ProfileTabs';
 import NameModal from '@/app/components/modals/NameModal';
@@ -58,15 +59,12 @@ const Body = () => {
   };
 
   const VipHandler = () => {
-    if (!subscription) {
-      Submodal.onOpen();
-    }
+    Submodal.onOpen();
   };
-
-  console.log(subscription);
 
   return (
     <>
+      <HelmetComponent title='User' />
       {loading ? (
         <Loading />
       ) : (
