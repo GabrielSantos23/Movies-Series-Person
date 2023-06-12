@@ -13,18 +13,20 @@ import { useRouter, usePathname } from 'next/navigation';
 import SearchBar from './SearchBar';
 import MobileSidebar from './MobileSidebar';
 import { useSession } from 'next-auth/react';
+import { useUser } from '@/hooks/useUser';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
+  const { user } = useUser();
 
   const links = [
     { icon: <RiHomeLine />, href: '/' || '' },
     { icon: <MdOutlineMovieCreation />, href: '/movie' },
     { icon: <BiTv />, href: '/tv' },
-    { icon: <AiOutlineUser />, href: session ? '/user' : '/profile' },
+    { icon: <AiOutlineUser />, href: user?.id ? '/user' : '/profile' },
   ];
 
   const router = useRouter();

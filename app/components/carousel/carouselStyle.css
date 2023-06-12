@@ -1,5 +1,5 @@
 .swiper-button-prev {
-  height: 96%;
+  height: 370px;
   top: 0;
   left: 0;
   background-color: #00000090;
@@ -9,7 +9,7 @@
   width: 30px;
 }
 .swiper-button-next {
-  height: 96%;
+  height: 370px;
   top: 0;
   right: 0;
   background-color: #00000090;

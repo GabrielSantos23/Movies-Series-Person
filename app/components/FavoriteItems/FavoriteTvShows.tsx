@@ -8,34 +8,57 @@ const API_URL = 'https://api.themoviedb.org/3/tv/';
 import { ClipLoader } from 'react-spinners';
 import Link from 'next/link';
 import Item from '../Items/Item';
+import { useSessionContext } from '@supabase/auth-helpers-react';
+import { useUser } from '@/hooks/useUser';
+import { useRouter } from 'next/navigation';
 
 interface tvShow {
   id: number;
-  name: string;
-  tvShowId: string;
-  overview: string;
-  poster_path: string;
-  vote_average: number;
+  serie_id: string;
 }
 
 const FavoriteTvShows = () => {
   const [favoriteTvShows, setFavoriteTvShows] = useState<tvShow[]>([]);
   const [TvShows, setTvShows] = useState<tvShow[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { supabaseClient } = useSessionContext();
+  const { user } = useUser();
+  const router = useRouter();
+  // useEffect(() => {
+  //   async function fetchFavoriteTvShows() {
+  //     try {
+  //       const response = await fetch('/api/myfavoritesTvShows');
+  //       const data = await response.json();
+  //       setFavoriteTvShows(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   fetchFavoriteTvShows();
+  // }, []);
 
   useEffect(() => {
-    async function fetchFavoriteTvShows() {
-      try {
-        const response = await fetch('/api/myfavoritesTvShows');
-        const data = await response.json();
-        setFavoriteTvShows(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    async function fetchDados() {
+      const { data, error } = await supabaseClient
+        .from('liked_tvshows')
+        .select('*')
+        .eq('user_id', user?.id);
 
-    fetchFavoriteTvShows();
-  }, []);
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const convertedData = data.map((item) => ({
+        id: item.id,
+        serie_id: item.serie_id,
+      }));
+
+      setFavoriteTvShows(convertedData);
+    }
+    fetchDados();
+  }, [supabaseClient, user?.id]);
 
   useEffect(() => {
     async function fetchTvShowDetails() {
@@ -44,7 +67,7 @@ const FavoriteTvShows = () => {
         const tvShowDetails = await Promise.all(
           favoriteTvShows.map(async (tv) => {
             const response = await fetch(
-              `${API_URL}${tv.tvShowId}?api_key=${TMDBApiKey}`
+              `${API_URL}${tv.serie_id}?api_key=${TMDBApiKey}`
             );
             const data = await response.json();
             return data;
@@ -55,11 +78,12 @@ const FavoriteTvShows = () => {
       } else {
         setTvShows([]);
         setIsLoading(false);
+        router.refresh();
       }
     }
 
     fetchTvShowDetails();
-  }, [favoriteTvShows]);
+  }, [favoriteTvShows, router]);
 
   return (
     <div className='mb-10'>
@@ -76,7 +100,7 @@ const FavoriteTvShows = () => {
               className='flex flex-col max-h-[370px] min-h-[370px]'
               key={tv.id}
             >
-              <Item item={tv} type={'tv'} user />
+              <Item item={tv} type={'tv'} userImage />
             </div>
           ))}
         </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import TopBarProgress from 'react-topbar-progress-indicator';
 import { usePathname } from 'next/navigation';
