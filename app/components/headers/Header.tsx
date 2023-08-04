@@ -122,8 +122,8 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
       {movie && (
         <>
           {matches ? (
-            <div className='w-full relative h-[70vh]  bg-black flex'>
-              <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
+            <div className='relative flex h-[70vh]  w-full bg-black'>
+              <motion.div className='div-40 absolute  z-[2000] flex h-[70vh] w-[40%]  flex-col justify-center pl-10 '>
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -132,11 +132,11 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
                   <Link
                     href={movie.name ? `/tv/${movie.id}` : `/movie/${movie.id}`}
                   >
-                    <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
+                    <h1 className=' z-[2000] w-[110%] text-4xl font-normal'>
                       {movie?.title || movie?.name}
                     </h1>
                   </Link>
-                  <div className='flex gap-2 mt-5'>
+                  <div className='mt-5 flex gap-2'>
                     {movie?.vote_average && (
                       <Rating
                         precision={0.5}
@@ -176,7 +176,7 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
                       <p className='text-neutral-500'>{usRating} </p>
                     )}
                   </div>
-                  <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
+                  <div className='z-[2000] mt-5 line-clamp-3 w-[110%]'>
                     {movie?.overview}
                   </div>
                 </motion.div>
@@ -185,10 +185,10 @@ const Header: React.FC<HeaderProps> = ({ urltype }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: imageLoaded ? 1 : 0 }}
                 transition={{ duration: 0.5, type: 'linear' }}
-                className='w-[70%]  right-0 flex items-end flex-end h-[70vh]'
+                className='flex-end  right-0 flex h-[70vh] w-[70%] items-end'
               >
                 <LazyLoadImage
-                  className='h-[70vh] top-0 absolute w-full right-0 opacity-70 object-cover'
+                  className='absolute right-0 top-0 h-[70vh] w-full object-cover opacity-70'
                   src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
                   alt={movie?.name || movie?.title}
                   threshold={0}

@@ -107,7 +107,6 @@ const NameModal: React.FC<ModalProviderProps> = ({ products }) => {
     }
   }, [session, router, onClose]);
 
-  console.log(products);
   return (
     <Modal2
       title='Set your name'

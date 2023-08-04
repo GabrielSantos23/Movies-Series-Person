@@ -19,6 +19,7 @@ interface ItemsCarouselProps {
   type: string;
   url?: string;
   serie?: boolean;
+  details?: boolean;
 }
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -74,7 +75,7 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
                     type === 'similar'
                       ? 'hidden'
                       : 'text-sky-500 hover:text-sky-600'
-                  }   transition  text-sm`}
+                  }   text-sm  transition`}
                 >
                   Explore all
                 </div>
@@ -82,7 +83,7 @@ const ItemsCarousel: React.FC<ItemsCarouselProps> = ({
             )}
           </div>
           <div>
-            <Carousel>
+            <Carousel details>
               {items?.map((item) => (
                 <Item
                   key={item.id}

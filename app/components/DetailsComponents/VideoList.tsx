@@ -167,10 +167,10 @@ const VideoList: React.FC<VideoListProps> = ({ id, type }) => {
   }, [filteredVideos]);
 
   return (
-    <div className='flex flex-col  mb-5 '>
-      <div className='flex gap-3 mb-5 w-full'>
+    <div className='mx-10 mb-5  flex flex-col  md:mx-32 '>
+      <div className='mb-5 flex w-full gap-3'>
         <select
-          className='bg-[#202124] border-none rounded-sm text-sm min-w-[150px] focus:outline-none py-3'
+          className='min-w-[150px] rounded-sm border-none bg-[#202124] py-3 text-sm focus:outline-none'
           id='type-filter'
           value={selectedType}
           onChange={handleTypeChange}
@@ -183,10 +183,10 @@ const VideoList: React.FC<VideoListProps> = ({ id, type }) => {
           ))}
         </select>
       </div>
-      <div className='flex flex-wrap gap-1 justify-items-center'>
+      <div className='flex flex-wrap justify-items-center  gap-1'>
         {filteredVideos.map((video: any, index: any) => (
           <div key={index} className='flex flex-col'>
-            <div className='relative cursor-pointer hover:opacity-80 transition'>
+            <div className='relative cursor-pointer transition hover:opacity-80'>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: imageLoaded ? 1 : 0 }}
@@ -210,12 +210,12 @@ const VideoList: React.FC<VideoListProps> = ({ id, type }) => {
               <Time videoId={video.key} duration={videoDetails[video.key]} />
             </div>
             <p className='max-w-[400px]'>{video.name}</p>
-            <p className='text-stone-500 text-sm '>{video.type}</p>
+            <p className='text-sm text-stone-500 '>{video.type}</p>
           </div>
         ))}
       </div>
       <Modal video isOpen={isOpen} onClose={handleCloseModal}>
-        <div className='relative overflow-hidden w-full pt-[56.25%]'>
+        <div className='relative w-full overflow-hidden pt-[56.25%]'>
           <iframe
             title='video player'
             width='90%'
@@ -223,7 +223,7 @@ const VideoList: React.FC<VideoListProps> = ({ id, type }) => {
             src={`https://www.youtube.com/embed/${currentVideoId}`}
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
-            className='absolute top-0 w-full h-full'
+            className='absolute top-0 h-full w-full'
             style={{ border: 'none' }}
           />
         </div>

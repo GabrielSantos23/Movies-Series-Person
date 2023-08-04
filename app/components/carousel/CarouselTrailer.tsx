@@ -19,7 +19,6 @@ interface SwiperArrowProps {
 
 interface CarouselProps {
   children?: any;
-  details?: boolean;
 }
 
 const SwiperArrowLeft: React.FC<SwiperArrowProps> = ({
@@ -54,10 +53,10 @@ const SwiperArrowRight: React.FC<SwiperArrowProps> = ({
   ></button>
 );
 
-const Carousel: React.FC<CarouselProps> = ({ children, details }) => {
+const CarouselTrailer: React.FC<CarouselProps> = ({ children }) => {
   const swiperOptions = {
-    slidesPerView: 7.15,
-    spaceBetween: 3,
+    slidesPerView: 5,
+    spaceBetween: 6,
     initialSlide: 0,
     autoplay: false,
     loop: false,
@@ -68,11 +67,11 @@ const Carousel: React.FC<CarouselProps> = ({ children, details }) => {
     },
     breakpoints: {
       1600: {
-        slidesPerView: 7.15,
+        slidesPerView: 5,
         slidesPerGroup: 4,
       },
       1300: {
-        slidesPerView: 5.15,
+        slidesPerView: 4,
         slidesPerGroup: 3,
       },
       1024: {
@@ -93,7 +92,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, details }) => {
 
   const StyledSwiper = styled(Swiper)`
     .swiper-button-prev {
-      height: 90%;
+      height: 370px;
       top: 0;
       left: 0;
       background-color: #00000090;
@@ -103,7 +102,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, details }) => {
       width: 30px;
     }
     .swiper-button-next {
-      height: 95%;
+      height: 370px;
       top: 0;
       right: 0;
       background-color: #00000090;
@@ -127,4 +126,4 @@ const Carousel: React.FC<CarouselProps> = ({ children, details }) => {
   );
 };
 
-export default Carousel;
+export default CarouselTrailer;

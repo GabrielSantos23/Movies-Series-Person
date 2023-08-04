@@ -17,6 +17,7 @@ const nextConfig = {
       'avatars.githubusercontent.com',
       'lh3.googleusercontent.com',
       'image.tmdb.org',
+      'img.youtube.com',
     ],
   },
 };
