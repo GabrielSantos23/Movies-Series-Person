@@ -41,10 +41,6 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
     setImageLoaded(true);
   };
 
-  console.log(
-    `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=en-US`
-  );
-
   const handleEpisodeClick = () => {
     setModalOpen(true);
   };
@@ -136,6 +132,13 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
     }
   }, [movie]);
 
+  const handleWatchNowClick = () => {
+    const movieSection = document.getElementById('movie');
+    if (movieSection) {
+      movieSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const imdbid = movie?.imdb_id ? movie?.imdb_id : SocialMedia?.imdb_id;
   return (
     <div className='h-[70vh] bg-black'>
@@ -148,27 +151,27 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
           />
           {modalOpen && (
             <Modal video onClose={() => setModalOpen(false)} isOpen={modalOpen}>
-              <div className='relative overflow-hidden w-full pt-[56.25%]'>
+              <div className='relative w-full overflow-hidden pt-[56.25%]'>
                 <iframe
                   src={`${link}/${imdbid}`}
-                  className='absolute top-0 w-full h-full'
+                  className='absolute top-0 h-full w-full'
                   allowFullScreen
                   allow='picture-in-picture'
                 />
               </div>
             </Modal>
           )}
-          <div className='w-full relative hidden bg-black lg:flex'>
-            <motion.div className='div-40 w-[40%]  absolute z-[2000] pl-10 justify-center  h-[70vh] flex flex-col '>
+          <div className='relative hidden w-full bg-black lg:flex'>
+            <motion.div className='div-40 absolute  z-[2000] flex h-[70vh] w-[40%]  flex-col justify-center pl-10 '>
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ type: 'linear', duration: 0.5 }}
               >
-                <h1 className=' w-[110%] z-[2000] font-normal text-4xl'>
+                <h1 className=' z-[2000] w-[110%] text-4xl font-normal'>
                   {movie?.title || movie?.name}
                 </h1>
-                <div className='flex gap-2 mt-5'>
+                <div className='mt-5 flex gap-2'>
                   <Rating
                     precision={0.5}
                     readOnly
@@ -207,11 +210,11 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
                   )}
                   {usRating && <p className='text-neutral-500'>{usRating} </p>}
                 </div>
-                <div className='mt-5 w-[110%] z-[2000] line-clamp-3'>
+                <div className='z-[2000] mt-5 line-clamp-3 w-[110%]'>
                   {movie?.overview}
                 </div>
-                <div className='flex items-center gap-2 mt-5'>
-                  <Button onClick={() => handleEpisodeClick()}>
+                <div className='mt-5 flex items-center gap-2'>
+                  <Button onClick={handleWatchNowClick}>
                     <BsFillPlayFill /> &nbsp; Watch Now
                   </Button>
                   <Button secondary onClick={watchTrailer}>
@@ -225,10 +228,10 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: imageLoaded ? 1 : 0 }}
               transition={{ duration: 0.5, type: 'linear' }}
-              className='w-[70%]  right-0 flex items-end flex-end h-[100%]'
+              className='flex-end  right-0 flex h-[100%] w-[70%] items-end'
             >
               <LazyLoadImage
-                className='h-[70vh] absolute w-full right-0 opacity-70 object-cover '
+                className='absolute right-0 h-[70vh] w-full object-cover opacity-70 '
                 src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
                 alt={movie?.name || movie?.title}
                 threshold={0}

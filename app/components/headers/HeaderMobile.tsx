@@ -38,9 +38,16 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
   //   const handleCloseModal = () => {
   //     setShowModal(false);
   //   };
+
+  const handleWatchNowClick = () => {
+    const movieSection = document.getElementById('movie');
+    if (movieSection) {
+      movieSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <div
-      className='h-[70vh] lg:hidden bg-black w-full'
+      className='h-[70vh] w-full bg-black lg:hidden'
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`,
         backgroundSize: 'cover',
@@ -48,14 +55,14 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
         backgroundPosition: 'center',
       }}
     >
-      <div className='w-full headerMobileBG relative h-full'>
-        <div className='w-full h-full flex-col justify-end flex z-[1000] absolute px-5'>
+      <div className='headerMobileBG relative h-full w-full'>
+        <div className='absolute z-[1000] flex h-full w-full flex-col justify-end px-5'>
           <Link href={movie.name ? `/serie/${movie.id}` : `/movie/${movie.id}`}>
-            <h1 className='font-normal text-2xl'>
+            <h1 className='text-2xl font-normal'>
               {movie.title || movie.name}
             </h1>
           </Link>
-          <div className='flex gap-2 mt-5'>
+          <div className='mt-5 flex gap-2'>
             <Rating
               precision={0.5}
               readOnly
@@ -89,11 +96,11 @@ const HeaderMobile: React.FC<HeaderMobileProps> = ({
             )}
             {usRating && <p className='text-neutral-500'>{usRating} </p>}
           </div>
-          <div className='mt-5 text-sm mb-5 w-full line-clamp-2 '>
+          <div className='mb-5 mt-5 line-clamp-2 w-full text-sm '>
             {movie?.overview}
           </div>
-          <div className='flex absolute w-[90vw] pl-[-40px] h-full z-[99999999999999999] items-center justify-center'>
-            <button onClick={handleEpisodeClick}>
+          <div className='absolute z-[99999999999999999] flex h-full w-[90vw] items-center justify-center pl-[-40px]'>
+            <button onClick={handleWatchNowClick}>
               <Image
                 width={50}
                 height={50}
