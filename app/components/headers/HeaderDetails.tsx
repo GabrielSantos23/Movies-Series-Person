@@ -133,7 +133,9 @@ const HeaderDetails: React.FC<HeaderDetailsProps> = ({ type, link }) => {
   }, [movie]);
 
   const handleWatchNowClick = () => {
-    const movieSection = document.getElementById('movie');
+    const movieSection = document.getElementById(
+      type === 'movie' ? 'movie' : 'tv'
+    );
     if (movieSection) {
       movieSection.scrollIntoView({ behavior: 'smooth' });
     }

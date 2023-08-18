@@ -8,6 +8,7 @@ import { useUser } from '@/hooks/useUser';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { toast } from 'react-hot-toast';
 import ItemsCarousel from '@/app/components/carousel/ItemsCarousel';
+import WarezIframe from '@/app/components/WarezIframe';
 
 const Movie = () => {
   const { supabaseClient } = useSessionContext();
@@ -51,12 +52,14 @@ const Movie = () => {
       {movie && (
         <section id='movie'>
           <div>
-            <iframe
+            {/* <iframe
               src={`https://embed.warezcdn.com/filme/${imdbid}`}
               className='h-[900px]  w-full  xl:h-[700px] '
               allowFullScreen
+              loading='lazy'
               allow='picture-in-picture'
-            />
+            /> */}
+            <WarezIframe type='filme' imdb={imdbid} />
           </div>
         </section>
       )}
